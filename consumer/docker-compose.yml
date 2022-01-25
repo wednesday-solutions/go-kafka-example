@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    restart: always
+    env_file:
+      - .env.docker
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_PORT=${DB_PORT}
+      - POSTGRES_DB=${DB_NAME}
+
+  redis:
+    image: redis:6-alpine
+    restart: always
+
+  app:
+    build: .
+    restart: always
+    env_file:
+      - ./.env.docker
+    depends_on:
+      - db
+      - redis
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    environment:
+      ENVIRONMENT_NAME: 'docker'
+
+   
