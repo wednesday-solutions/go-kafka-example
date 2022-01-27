@@ -16,8 +16,8 @@ import (
 	redis "github.com/gomodule/redigo/redis"
 	redigomock "github.com/rafaeljusto/redigomock/v3"
 	"github.com/volatiletech/sqlboiler/boil"
-	"github.com/wednesday-solutions/go-template/models"
-	"github.com/wednesday-solutions/go-template/testutls"
+	"github.com/wednesday-solutions/go-template-producer/models"
+	"github.com/wednesday-solutions/go-template-producer/testutls"
 )
 
 var conn = redigomock.NewConn()

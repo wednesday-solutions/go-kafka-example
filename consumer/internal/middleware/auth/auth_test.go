@@ -21,11 +21,11 @@ import (
 	"github.com/labstack/echo"
 	"github.com/stretchr/testify/assert"
 	"github.com/volatiletech/sqlboiler/boil"
-	graphql "github.com/wednesday-solutions/go-template/graphql_models"
-	"github.com/wednesday-solutions/go-template/internal/middleware/auth"
-	"github.com/wednesday-solutions/go-template/models"
-	"github.com/wednesday-solutions/go-template/resolver"
-	testutls "github.com/wednesday-solutions/go-template/testutls"
+	graphql "github.com/wednesday-solutions/go-template-consumer/graphql_models"
+	"github.com/wednesday-solutions/go-template-consumer/internal/middleware/auth"
+	"github.com/wednesday-solutions/go-template-consumer/models"
+	"github.com/wednesday-solutions/go-template-consumer/resolver"
+	testutls "github.com/wednesday-solutions/go-template-consumer/testutls"
 )
 
 var parseTokenMock func(token string) (*jwt.Token, error)

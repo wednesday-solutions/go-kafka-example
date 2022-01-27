@@ -1,4 +1,4 @@
-// Package api Go-Template
+// Package api go-template-producer
 package api
 
 import (
@@ -17,14 +17,14 @@ import (
 	"github.com/labstack/echo"
 	_ "github.com/lib/pq" // here
 	"github.com/volatiletech/sqlboiler/boil"
-	graphql "github.com/wednesday-solutions/go-template/graphql_models"
-	"github.com/wednesday-solutions/go-template/internal/config"
-	"github.com/wednesday-solutions/go-template/internal/jwt"
-	authMw "github.com/wednesday-solutions/go-template/internal/middleware/auth"
-	"github.com/wednesday-solutions/go-template/internal/postgres"
-	"github.com/wednesday-solutions/go-template/internal/server"
-	throttle "github.com/wednesday-solutions/go-template/pkg/utl/rate_throttle"
-	"github.com/wednesday-solutions/go-template/resolver"
+	graphql "github.com/wednesday-solutions/go-template-producer/graphql_models"
+	"github.com/wednesday-solutions/go-template-producer/internal/config"
+	"github.com/wednesday-solutions/go-template-producer/internal/jwt"
+	authMw "github.com/wednesday-solutions/go-template-producer/internal/middleware/auth"
+	"github.com/wednesday-solutions/go-template-producer/internal/postgres"
+	"github.com/wednesday-solutions/go-template-producer/internal/server"
+	throttle "github.com/wednesday-solutions/go-template-producer/pkg/utl/rate_throttle"
+	"github.com/wednesday-solutions/go-template-producer/resolver"
 )
 
 // Start starts the API service

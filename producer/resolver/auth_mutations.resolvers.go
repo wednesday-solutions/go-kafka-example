@@ -9,14 +9,14 @@ import (
 	"fmt"
 
 	"github.com/volatiletech/null"
-	"github.com/wednesday-solutions/go-template/daos"
-	"github.com/wednesday-solutions/go-template/graphql_models"
-	"github.com/wednesday-solutions/go-template/internal/config"
-	"github.com/wednesday-solutions/go-template/internal/middleware/auth"
-	"github.com/wednesday-solutions/go-template/internal/service"
-	"github.com/wednesday-solutions/go-template/pkg/utl/convert"
-	kafka "github.com/wednesday-solutions/go-template/pkg/utl/kafkaservice"
-	resultwrapper "github.com/wednesday-solutions/go-template/pkg/utl/result_wrapper"
+	"github.com/wednesday-solutions/go-template-producer/daos"
+	"github.com/wednesday-solutions/go-template-producer/graphql_models"
+	"github.com/wednesday-solutions/go-template-producer/internal/config"
+	"github.com/wednesday-solutions/go-template-producer/internal/middleware/auth"
+	"github.com/wednesday-solutions/go-template-producer/internal/service"
+	"github.com/wednesday-solutions/go-template-producer/pkg/utl/convert"
+	kafka "github.com/wednesday-solutions/go-template-producer/pkg/utl/kafkaservice"
+	resultwrapper "github.com/wednesday-solutions/go-template-producer/pkg/utl/result_wrapper"
 )
 
 func (r *mutationResolver) Login(

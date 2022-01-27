@@ -7,9 +7,9 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/rs/zerolog"
 
-	"github.com/wednesday-solutions/go-template/internal/config"
-	"github.com/wednesday-solutions/go-template/pkg/api"
-	kafka "github.com/wednesday-solutions/go-template/pkg/utl/kafkaservice"
+	"github.com/wednesday-solutions/go-template-consumer/internal/config"
+	"github.com/wednesday-solutions/go-template-consumer/pkg/api"
+	kafka "github.com/wednesday-solutions/go-template-consumer/pkg/utl/kafkaservice"
 )
 
 func main() {

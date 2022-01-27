@@ -8,8 +8,8 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/stretchr/testify/assert"
-	resultwrapper "github.com/wednesday-solutions/go-template/pkg/utl/result_wrapper"
-	"github.com/wednesday-solutions/go-template/testutls"
+	resultwrapper "github.com/wednesday-solutions/go-template-consumer/pkg/utl/result_wrapper"
+	"github.com/wednesday-solutions/go-template-consumer/testutls"
 )
 
 func TestSplitByLabel(t *testing.T) {

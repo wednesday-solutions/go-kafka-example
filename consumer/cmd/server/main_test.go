@@ -8,10 +8,10 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
 	"github.com/stretchr/testify/assert"
-	main "github.com/wednesday-solutions/go-template/cmd/server"
-	"github.com/wednesday-solutions/go-template/internal/config"
-	"github.com/wednesday-solutions/go-template/pkg/api"
-	"github.com/wednesday-solutions/go-template/testutls"
+	main "github.com/wednesday-solutions/go-template-consumer/cmd/server"
+	"github.com/wednesday-solutions/go-template-consumer/internal/config"
+	"github.com/wednesday-solutions/go-template-consumer/pkg/api"
+	"github.com/wednesday-solutions/go-template-consumer/testutls"
 )
 
 func TestSetup(t *testing.T) {

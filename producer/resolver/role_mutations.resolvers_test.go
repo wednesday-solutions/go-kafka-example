@@ -11,8 +11,8 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"github.com/volatiletech/sqlboiler/boil"
-	fm "github.com/wednesday-solutions/go-template/graphql_models"
-	"github.com/wednesday-solutions/go-template/resolver"
+	fm "github.com/wednesday-solutions/go-template-producer/graphql_models"
+	"github.com/wednesday-solutions/go-template-producer/resolver"
 )
 
 func TestCreateRole(t *testing.T) {

@@ -5,10 +5,10 @@ import (
 	"fmt"
 
 	"github.com/volatiletech/sqlboiler/queries/qm"
-	seeders "github.com/wednesday-solutions/go-template/cmd/seeder"
-	"github.com/wednesday-solutions/go-template/internal/postgres"
-	"github.com/wednesday-solutions/go-template/models"
-	"github.com/wednesday-solutions/go-template/pkg/utl/secure"
+	seeders "github.com/wednesday-solutions/go-template-producer/cmd/seeder"
+	"github.com/wednesday-solutions/go-template-producer/internal/postgres"
+	"github.com/wednesday-solutions/go-template-producer/models"
+	"github.com/wednesday-solutions/go-template-producer/pkg/utl/secure"
 )
 
 func main() {

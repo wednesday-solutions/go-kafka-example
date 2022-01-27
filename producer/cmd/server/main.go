@@ -7,9 +7,8 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/rs/zerolog"
 
-	"github.com/wednesday-solutions/go-template/internal/config"
-	"github.com/wednesday-solutions/go-template/pkg/api"
-	kafka "github.com/wednesday-solutions/go-template/pkg/utl/kafkaservice"
+	"github.com/wednesday-solutions/go-template-producer/internal/config"
+	"github.com/wednesday-solutions/go-template-producer/pkg/api"
 )
 
 func main() {
@@ -21,7 +20,6 @@ func Setup() {
 	if envName == "" {
 		envName = "local"
 	}
-	kafka.Initiate()
 	err := godotenv.Load(fmt.Sprintf(".env.%s", envName))
 	if err != nil {
 		fmt.Print("error loading .env file")

@@ -11,10 +11,10 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"github.com/volatiletech/sqlboiler/boil"
-	fm "github.com/wednesday-solutions/go-template/graphql_models"
-	"github.com/wednesday-solutions/go-template/pkg/utl/convert"
-	"github.com/wednesday-solutions/go-template/resolver"
-	"github.com/wednesday-solutions/go-template/testutls"
+	fm "github.com/wednesday-solutions/go-template-consumer/graphql_models"
+	"github.com/wednesday-solutions/go-template-consumer/pkg/utl/convert"
+	"github.com/wednesday-solutions/go-template-consumer/resolver"
+	"github.com/wednesday-solutions/go-template-consumer/testutls"
 )
 
 func TestCreateUser(t *testing.T) {

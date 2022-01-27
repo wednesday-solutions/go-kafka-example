@@ -11,8 +11,8 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/volatiletech/null"
 	"github.com/volatiletech/sqlboiler/boil"
-	"github.com/wednesday-solutions/go-template/internal/config"
-	"github.com/wednesday-solutions/go-template/models"
+	"github.com/wednesday-solutions/go-template-producer/internal/config"
+	"github.com/wednesday-solutions/go-template-producer/models"
 )
 
 type key string
@@ -110,7 +110,7 @@ func MockConfig() *config.Configuration {
 			Timeout:    5,
 		},
 		Server: &config.Server{
-			Port:         ":9000",
+			Port:         ":9001",
 			Debug:        true,
 			ReadTimeout:  10,
 			WriteTimeout: 5,

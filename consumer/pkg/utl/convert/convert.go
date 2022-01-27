@@ -4,8 +4,8 @@ import (
 	"strconv"
 
 	"github.com/volatiletech/null"
-	graphql "github.com/wednesday-solutions/go-template/graphql_models"
-	"github.com/wednesday-solutions/go-template/models"
+	graphql "github.com/wednesday-solutions/go-template-consumer/graphql_models"
+	"github.com/wednesday-solutions/go-template-consumer/models"
 )
 
 // StringToPointerString returns pointer string value

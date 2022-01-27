@@ -6,8 +6,8 @@ package resolver
 import (
 	"context"
 
-	"github.com/wednesday-solutions/go-template/graphql_models"
-	"github.com/wednesday-solutions/go-template/pkg/utl"
+	"github.com/wednesday-solutions/go-template-consumer/graphql_models"
+	"github.com/wednesday-solutions/go-template-consumer/pkg/utl"
 )
 
 func (r *subscriptionResolver) UserNotification(ctx context.Context) (<-chan *graphql_models.User, error) {

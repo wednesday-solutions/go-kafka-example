@@ -13,7 +13,7 @@ import (
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo"
 	"github.com/vektah/gqlparser/v2/gqlerror"
-	"github.com/wednesday-solutions/go-template/internal/server"
+	"github.com/wednesday-solutions/go-template-producer/internal/server"
 )
 
 var (

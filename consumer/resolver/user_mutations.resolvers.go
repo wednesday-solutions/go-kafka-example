@@ -9,15 +9,15 @@ import (
 	"time"
 
 	"github.com/volatiletech/null"
-	"github.com/wednesday-solutions/go-template/daos"
-	"github.com/wednesday-solutions/go-template/graphql_models"
-	"github.com/wednesday-solutions/go-template/internal/config"
-	"github.com/wednesday-solutions/go-template/internal/middleware/auth"
-	"github.com/wednesday-solutions/go-template/internal/service"
-	"github.com/wednesday-solutions/go-template/models"
-	"github.com/wednesday-solutions/go-template/pkg/utl/convert"
-	throttle "github.com/wednesday-solutions/go-template/pkg/utl/rate_throttle"
-	resultwrapper "github.com/wednesday-solutions/go-template/pkg/utl/result_wrapper"
+	"github.com/wednesday-solutions/go-template-consumer/daos"
+	"github.com/wednesday-solutions/go-template-consumer/graphql_models"
+	"github.com/wednesday-solutions/go-template-consumer/internal/config"
+	"github.com/wednesday-solutions/go-template-consumer/internal/middleware/auth"
+	"github.com/wednesday-solutions/go-template-consumer/internal/service"
+	"github.com/wednesday-solutions/go-template-consumer/models"
+	"github.com/wednesday-solutions/go-template-consumer/pkg/utl/convert"
+	throttle "github.com/wednesday-solutions/go-template-consumer/pkg/utl/rate_throttle"
+	resultwrapper "github.com/wednesday-solutions/go-template-consumer/pkg/utl/result_wrapper"
 )
 
 func (r *mutationResolver) CreateUser(

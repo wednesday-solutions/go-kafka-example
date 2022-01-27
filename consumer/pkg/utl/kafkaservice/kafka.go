@@ -7,7 +7,7 @@ import (
 	"os"
 
 	kafka "github.com/segmentio/kafka-go"
-	models "github.com/wednesday-solutions/go-template/models"
+	models "github.com/wednesday-solutions/go-template-consumer/models"
 )
 
 type KAFKA_TOPIC string
