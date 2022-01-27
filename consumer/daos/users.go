@@ -7,7 +7,7 @@ import (
 
 	"github.com/volatiletech/sqlboiler/boil"
 	"github.com/volatiletech/sqlboiler/queries/qm"
-	"github.com/wednesday-solutions/go-template/models"
+	"github.com/wednesday-solutions/go-template-consumer/models"
 )
 
 // FindUserByUserName finds user by username

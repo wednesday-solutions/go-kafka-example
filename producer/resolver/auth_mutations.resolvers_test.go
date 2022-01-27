@@ -11,9 +11,9 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"github.com/volatiletech/sqlboiler/boil"
-	fm "github.com/wednesday-solutions/go-template/graphql_models"
-	"github.com/wednesday-solutions/go-template/resolver"
-	"github.com/wednesday-solutions/go-template/testutls"
+	fm "github.com/wednesday-solutions/go-template-producer/graphql_models"
+	"github.com/wednesday-solutions/go-template-producer/resolver"
+	"github.com/wednesday-solutions/go-template-producer/testutls"
 )
 
 func TestLogin(t *testing.T) {

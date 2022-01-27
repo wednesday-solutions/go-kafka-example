@@ -12,9 +12,9 @@ import (
 	"github.com/volatiletech/null"
 	"github.com/volatiletech/sqlboiler/boil"
 	"github.com/volatiletech/sqlboiler/queries/qm"
-	"github.com/wednesday-solutions/go-template/daos"
-	"github.com/wednesday-solutions/go-template/models"
-	"github.com/wednesday-solutions/go-template/testutls"
+	"github.com/wednesday-solutions/go-template-consumer/daos"
+	"github.com/wednesday-solutions/go-template-consumer/models"
+	"github.com/wednesday-solutions/go-template-consumer/testutls"
 )
 
 func TestCreateUserTx(t *testing.T) {

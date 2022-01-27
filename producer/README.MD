@@ -1,4 +1,4 @@
-<img align="left" src="https://github.com/wednesday-solutions/go-template/blob/master/golang_template_github.svg" width="440" height="480" />
+<img align="left" src="https://github.com/wednesday-solutions/go-template-producer/blob/master/golang_template_github.svg" width="440" height="480" />
 
 <div>
   <a href="https://www.wednesday.is?utm_source=gthb&utm_medium=repo&utm_campaign=gotemplate" align="left" style="margin-left: 0;">
@@ -60,7 +60,7 @@ The Go Template is a template/starter go project.
 
 ## Getting started
 
-Using go-template requires having Go 1.7 or above. Once you download go-template (either using Git or go get) you need to configure the following:
+Using go-template-producer requires having Go 1.7 or above. Once you download go-template-producer (either using Git or go get) you need to configure the following:
 
 1. Run the `pre-commit-setup.sh` script to install the pre-commit hooks locally.
 
@@ -101,7 +101,7 @@ To ease the development process a make file is provided
 
 - **`make local`**  
   Requires `.env.local` file to be present and set  
-  This starts the containers in `local` stage, bind the `current directory` to `/go/src/server` inside the `go-template_server_1` container and then starts the `terminal` inside `go-template_server_1`. Once the development is over, `exit` the terminal and call `make tear env=local` to stop all the containers
+  This starts the containers in `local` stage, bind the `current directory` to `/go/src/server` inside the `go-template-producer_server_1` container and then starts the `terminal` inside `go-template-producer_server_1`. Once the development is over, `exit` the terminal and call `make tear env=local` to stop all the containers
 
 # Running migrations
 
@@ -128,9 +128,9 @@ For more information on migration package refer [here](https://github.com/rubenv
 # File Structure
 
 ```txt
-go-template/
+go-template-producer/
 └──.github/
-│  └──workflow/go-template-ci.yml   # this file contains the config of github action
+│  └──workflow/go-template-producer-ci.yml   # this file contains the config of github action
 └──cmd/
 │  └──seeder/
 │  │  └──v1/1_roles.go              # seed file to load roles into DB

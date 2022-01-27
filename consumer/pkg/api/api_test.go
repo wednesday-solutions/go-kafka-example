@@ -1,4 +1,4 @@
-// Package api Go-Template
+// Package api go-template-consumer
 package api
 
 import (
@@ -22,11 +22,11 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/stretchr/testify/assert"
 	"github.com/volatiletech/sqlboiler/boil"
-	graphql "github.com/wednesday-solutions/go-template/graphql_models"
-	"github.com/wednesday-solutions/go-template/internal/config"
-	"github.com/wednesday-solutions/go-template/internal/server"
-	"github.com/wednesday-solutions/go-template/resolver"
-	"github.com/wednesday-solutions/go-template/testutls"
+	graphql "github.com/wednesday-solutions/go-template-consumer/graphql_models"
+	"github.com/wednesday-solutions/go-template-consumer/internal/config"
+	"github.com/wednesday-solutions/go-template-consumer/internal/server"
+	"github.com/wednesday-solutions/go-template-consumer/resolver"
+	"github.com/wednesday-solutions/go-template-consumer/testutls"
 )
 
 func TestStart(t *testing.T) {

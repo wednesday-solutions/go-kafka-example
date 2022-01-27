@@ -1,4 +1,4 @@
-module github.com/wednesday-solutions/go-template
+module github.com/wednesday-solutions/go-template-consumer
 
 go 1.14
 

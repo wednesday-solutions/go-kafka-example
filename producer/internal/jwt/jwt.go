@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/wednesday-solutions/go-template/models"
-	resultwrapper "github.com/wednesday-solutions/go-template/pkg/utl/result_wrapper"
+	"github.com/wednesday-solutions/go-template-producer/models"
+	resultwrapper "github.com/wednesday-solutions/go-template-producer/pkg/utl/result_wrapper"
 
 	"github.com/dgrijalva/jwt-go"
 )

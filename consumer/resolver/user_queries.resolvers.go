@@ -7,12 +7,12 @@ import (
 	"context"
 
 	"github.com/volatiletech/sqlboiler/queries/qm"
-	"github.com/wednesday-solutions/go-template/daos"
-	"github.com/wednesday-solutions/go-template/graphql_models"
-	"github.com/wednesday-solutions/go-template/internal/middleware/auth"
-	"github.com/wednesday-solutions/go-template/pkg/utl/convert"
-	rediscache "github.com/wednesday-solutions/go-template/pkg/utl/redis_cache"
-	resultwrapper "github.com/wednesday-solutions/go-template/pkg/utl/result_wrapper"
+	"github.com/wednesday-solutions/go-template-consumer/daos"
+	"github.com/wednesday-solutions/go-template-consumer/graphql_models"
+	"github.com/wednesday-solutions/go-template-consumer/internal/middleware/auth"
+	"github.com/wednesday-solutions/go-template-consumer/pkg/utl/convert"
+	rediscache "github.com/wednesday-solutions/go-template-consumer/pkg/utl/redis_cache"
+	resultwrapper "github.com/wednesday-solutions/go-template-consumer/pkg/utl/result_wrapper"
 )
 
 func (r *queryResolver) Me(ctx context.Context) (*graphql_models.User, error) {

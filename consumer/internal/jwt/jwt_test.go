@@ -8,8 +8,8 @@ import (
 	jwtgo "github.com/dgrijalva/jwt-go"
 	"github.com/stretchr/testify/assert"
 	"github.com/volatiletech/null"
-	"github.com/wednesday-solutions/go-template/internal/jwt"
-	"github.com/wednesday-solutions/go-template/models"
+	"github.com/wednesday-solutions/go-template-consumer/internal/jwt"
+	"github.com/wednesday-solutions/go-template-consumer/models"
 )
 
 func TestNew(t *testing.T) {

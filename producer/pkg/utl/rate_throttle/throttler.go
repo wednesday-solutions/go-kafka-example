@@ -8,7 +8,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/labstack/echo"
-	rediscache "github.com/wednesday-solutions/go-template/pkg/utl/redis_cache"
+	rediscache "github.com/wednesday-solutions/go-template-producer/pkg/utl/redis_cache"
 )
 
 type key string

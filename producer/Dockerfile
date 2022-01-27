@@ -1,13 +1,13 @@
 FROM golang
 
-RUN mkdir -p /go/src/github.com/wednesday-solutions/go-template
+RUN mkdir -p /go/src/github.com/wednesday-solutions/go-template-producer
 
 RUN go get -v github.com/rubenv/sql-migrate/... \
   github.com/volatiletech/sqlboiler \
   github.com/99designs/gqlgen
 
-ADD . /go/src/github.com/wednesday-solutions/go-template
-WORKDIR /go/src/github.com/wednesday-solutions/go-template
+ADD . /go/src/github.com/wednesday-solutions/go-template-producer
+WORKDIR /go/src/github.com/wednesday-solutions/go-template-producer
 
 RUN GOARCH=amd64 \
     GOOS=linux \
@@ -15,4 +15,4 @@ RUN GOARCH=amd64 \
     go mod vendor
 RUN go build -o ./ ./cmd/server/main.go
 CMD ["bash", "./migrate-and-run.sh"]
-EXPOSE 9000
+EXPOSE 9001

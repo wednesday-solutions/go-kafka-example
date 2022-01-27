@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/wednesday-solutions/go-template/internal/postgres"
+	"github.com/wednesday-solutions/go-template-consumer/internal/postgres"
 )
 
 // SeedData ...

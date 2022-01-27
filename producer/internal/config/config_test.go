@@ -7,8 +7,8 @@ import (
 
 	. "github.com/agiledragon/gomonkey/v2"
 	"github.com/stretchr/testify/assert"
-	"github.com/wednesday-solutions/go-template/internal/config"
-	"github.com/wednesday-solutions/go-template/testutls"
+	"github.com/wednesday-solutions/go-template-producer/internal/config"
+	"github.com/wednesday-solutions/go-template-producer/testutls"
 )
 
 func TestLoad(t *testing.T) {
