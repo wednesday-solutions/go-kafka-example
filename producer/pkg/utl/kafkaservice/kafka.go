@@ -16,13 +16,15 @@ const (
 )
 
 var tokenWriter *kafka.Writer = kafka.NewWriter(kafka.WriterConfig{
-	Brokers: []string{os.Getenv("KAFKA_HOST")},
-	Topic:   string(ISSUED_TOKEN),
+	Brokers:  []string{os.Getenv("KAFKA_HOST")},
+	Topic:    string(ISSUED_TOKEN),
+	Balancer: &kafka.Hash{},
 })
 
 var newUserWriter *kafka.Writer = kafka.NewWriter(kafka.WriterConfig{
-	Brokers: []string{os.Getenv("KAFKA_HOST")},
-	Topic:   string(NEW_USER_CREATED),
+	Brokers:  []string{os.Getenv("KAFKA_HOST")},
+	Topic:    string(NEW_USER_CREATED),
+	Balancer: &kafka.RoundRobin{},
 })
 
 func Produce(ctx context.Context, topic KAFKA_TOPIC, key []byte, value []byte) {
