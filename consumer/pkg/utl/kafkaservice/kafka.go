@@ -4,10 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
 	"os"
 
 	kafka "github.com/segmentio/kafka-go"
 	models "github.com/wednesday-solutions/go-template-consumer/models"
+	"github.com/wednesday-solutions/go-template-consumer/pkg/utl/convert"
+	"github.com/wednesday-solutions/go-template-consumer/resolver"
 )
 
 type KAFKA_TOPIC string
@@ -17,7 +20,7 @@ const (
 	NEW_USER_CREATED = "new-user-created"
 )
 
-func consumeIssuedToken(ctx context.Context) {
+func consumeIssuedToken(ctx context.Context, r *resolver.Resolver) {
 	// initialize a new reader with the brokers and topic
 	// the groupID identifies the consumer and prevents
 	// it from receiving duplicate messages
@@ -39,12 +42,14 @@ func consumeIssuedToken(ctx context.Context) {
 			fmt.Print("error while unmarshalling", e)
 		} else {
 			fmt.Print("\n\nNew token issued by the following user:", user)
-
+			for _, o := range r.Observers {
+				o <- convert.UserToGraphQlUser(&user)
+			}
 		}
 	}
 }
 
-func consumeNewUserCreated(ctx context.Context) {
+func consumeNewUserCreated(ctx context.Context, r *resolver.Resolver) {
 	// initialize a new reader with the brokers and topic
 	// the groupID identifies the consumer and prevents
 	// it from receiving duplicate messages
@@ -65,12 +70,15 @@ func consumeNewUserCreated(ctx context.Context) {
 			fmt.Print("error while unmarshalling", e)
 		} else {
 			fmt.Print("\n\nNew user created:", user)
+			for _, o := range r.Observers {
+				o <- convert.UserToGraphQlUser(&user)
+			}
 		}
 	}
 }
 
-func Initiate() {
+func Initiate(r *resolver.Resolver) {
 	ctx := context.Background()
-	go consumeIssuedToken(ctx)
-	go consumeNewUserCreated(ctx)
+	go consumeIssuedToken(ctx, r)
+	go consumeNewUserCreated(ctx, r)
 }
