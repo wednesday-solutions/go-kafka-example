@@ -26,6 +26,7 @@ func (r *mutationResolver) CreateUser(
 	ctx context.Context,
 	input graphql_models.UserCreateInput) (*graphql_models.UserPayload, error) {
 	err := throttle.Check(ctx, 5, 10*time.Second)
+
 	if err != nil {
 		return nil, err
 	}

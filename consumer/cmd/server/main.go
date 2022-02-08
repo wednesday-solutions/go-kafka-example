@@ -9,7 +9,6 @@ import (
 
 	"github.com/wednesday-solutions/go-template-consumer/internal/config"
 	"github.com/wednesday-solutions/go-template-consumer/pkg/api"
-	kafka "github.com/wednesday-solutions/go-template-consumer/pkg/utl/kafkaservice"
 )
 
 func main() {
@@ -21,7 +20,6 @@ func Setup() {
 	if envName == "" {
 		envName = "local"
 	}
-	kafka.Initiate()
 	err := godotenv.Load(fmt.Sprintf(".env.%s", envName))
 	if err != nil {
 		fmt.Print("error loading .env file")

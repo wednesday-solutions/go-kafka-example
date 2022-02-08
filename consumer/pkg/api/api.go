@@ -23,6 +23,7 @@ import (
 	authMw "github.com/wednesday-solutions/go-template-consumer/internal/middleware/auth"
 	"github.com/wednesday-solutions/go-template-consumer/internal/postgres"
 	"github.com/wednesday-solutions/go-template-consumer/internal/server"
+	kafka "github.com/wednesday-solutions/go-template-consumer/pkg/utl/kafkaservice"
 	throttle "github.com/wednesday-solutions/go-template-consumer/pkg/utl/rate_throttle"
 	"github.com/wednesday-solutions/go-template-consumer/resolver"
 )
@@ -54,8 +55,9 @@ func Start(cfg *config.Configuration) (*echo.Echo, error) {
 	playgroundHandler := playground.Handler("GraphQL playground", "/graphql")
 
 	observers := map[string]chan *graphql.User{}
+	r := &resolver.Resolver{Observers: observers}
 	graphqlHandler := handler.New(graphql.NewExecutableSchema(graphql.Config{
-		Resolvers: &resolver.Resolver{Observers: observers},
+		Resolvers: r,
 	}))
 
 	if os.Getenv("ENVIRONMENT_NAME") == "local" {
@@ -66,6 +68,13 @@ func Start(cfg *config.Configuration) (*echo.Echo, error) {
 		return authMw.GraphQLMiddleware(ctx, jwt, next)
 	})
 	e.POST("/graphql", func(c echo.Context) error {
+		req := c.Request()
+		res := c.Response()
+		graphqlHandler.ServeHTTP(res, req)
+		return nil
+	}, gqlMiddleware, throttlerMiddleware)
+
+	e.GET("/graphql", func(c echo.Context) error {
 		req := c.Request()
 		res := c.Response()
 		graphqlHandler.ServeHTTP(res, req)
@@ -103,6 +112,7 @@ func Start(cfg *config.Configuration) (*echo.Echo, error) {
 		playgroundHandler.ServeHTTP(res, req)
 		return nil
 	})
+	kafka.Initiate(r)
 	server.Start(e, &server.Config{
 		Port:                cfg.Server.Port,
 		ReadTimeoutSeconds:  cfg.Server.ReadTimeout,
