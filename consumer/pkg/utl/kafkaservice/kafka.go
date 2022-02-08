@@ -13,8 +13,8 @@ import (
 type KAFKA_TOPIC string
 
 const (
-	ISSUED_TOKEN     = "issuedToken"
-	NEW_USER_CREATED = "newUserCreated"
+	ISSUED_TOKEN     = "issued-token"
+	NEW_USER_CREATED = "new-user-created"
 )
 
 func consumeIssuedToken(ctx context.Context) {
