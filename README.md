@@ -20,3 +20,12 @@
         cd ../producer
         go run cmd/server/main.go
         ```
+
+
+## Optional
+
+Use a kafka visualizer tool. I use [this one](https://github.com/manasb-uoe/kafka-visualizer/) 
+
+```
+java -jar ~/wednesday/kafka-visualizer/rest/target/rest-1.0-SNAPSHOT.jar --zookeeper=localhost:2181 --kafka=localhost:9092 --env=UAT
+```
