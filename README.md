@@ -29,3 +29,10 @@ Use a kafka visualizer tool. I use [this one](https://github.com/manasb-uoe/kafk
 ```
 java -jar ~/wednesday/kafka-visualizer/rest/target/rest-1.0-SNAPSHOT.jar --zookeeper=localhost:2181 --kafka=localhost:9092 --env=UAT
 ```
+
+## Kafka cli commands
+
+- descirbe all consumers, topics and partition detiails
+```
+kafka-consumer-groups --bootstrap-server localhost:9092 --all-groups --describe
+```
