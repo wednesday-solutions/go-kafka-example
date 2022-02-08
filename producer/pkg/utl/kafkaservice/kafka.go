@@ -11,8 +11,8 @@ import (
 type KAFKA_TOPIC string
 
 const (
-	ISSUED_TOKEN     KAFKA_TOPIC = "issuedToken"
-	NEW_USER_CREATED KAFKA_TOPIC = "newUserCreated"
+	ISSUED_TOKEN     KAFKA_TOPIC = "issued-token"
+	NEW_USER_CREATED KAFKA_TOPIC = "new-user-created"
 )
 
 var tokenWriter *kafka.Writer = kafka.NewWriter(kafka.WriterConfig{
@@ -39,7 +39,6 @@ func Produce(ctx context.Context, topic KAFKA_TOPIC, key []byte, value []byte) {
 		return
 	}
 	err := kafkaWriter.WriteMessages(ctx, kafka.Message{
-		Key: key,
 		// create an arbitrary message payload for the value
 		Value: value,
 	})
