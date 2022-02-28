@@ -15,14 +15,22 @@ const (
 	NEW_USER_CREATED KAFKA_TOPIC = "new-user-created"
 )
 
+func getBrokers(count int) []string {
+	broker := os.Getenv(fmt.Sprintf("KAFKA_HOST_%d", count))
+	if broker == "" {
+		return []string{}
+	}
+	return append([]string{broker}, getBrokers(count+1)...)
+}
+
 var tokenWriter *kafka.Writer = kafka.NewWriter(kafka.WriterConfig{
-	Brokers:  []string{os.Getenv("KAFKA_HOST")},
+	Brokers:  getBrokers(1),
 	Topic:    string(ISSUED_TOKEN),
 	Balancer: &kafka.Hash{},
 })
 
 var newUserWriter *kafka.Writer = kafka.NewWriter(kafka.WriterConfig{
-	Brokers:  []string{os.Getenv("KAFKA_HOST")},
+	Brokers:  getBrokers(1),
 	Topic:    string(NEW_USER_CREATED),
 	Balancer: &kafka.RoundRobin{},
 })

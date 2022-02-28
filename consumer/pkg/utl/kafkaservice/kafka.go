@@ -20,13 +20,21 @@ const (
 	NEW_USER_CREATED = "new-user-created"
 )
 
+func getBrokers(count int) []string {
+	broker := os.Getenv(fmt.Sprintf("KAFKA_HOST_%d", count))
+	if broker == "" {
+		return []string{}
+	}
+	return append([]string{broker}, getBrokers(count+1)...)
+}
+
 func consumeIssuedToken(ctx context.Context, r *resolver.Resolver) {
 	// initialize a new reader with the brokers and topic
 	// the groupID identifies the consumer and prevents
 	// it from receiving duplicate messages
 
 	issuedToken := kafka.NewReader(kafka.ReaderConfig{
-		Brokers: []string{os.Getenv("KAFKA_HOST")},
+		Brokers: getBrokers(1),
 		Topic:   string(ISSUED_TOKEN),
 		GroupID: "my-group",
 	})
@@ -61,7 +69,7 @@ func consumeNewUserCreated(ctx context.Context, r *resolver.Resolver) {
 	// the groupID identifies the consumer and prevents
 	// it from receiving duplicate messages
 	newUserCreatedReader := kafka.NewReader(kafka.ReaderConfig{
-		Brokers: []string{os.Getenv("KAFKA_HOST")},
+		Brokers: getBrokers(1),
 		Topic:   string(NEW_USER_CREATED),
 		GroupID: "my-group",
 	})
