@@ -1,1 +1,1 @@
-copilot deploy --name "$1-$2-svc" -e "$2"
+copilot deploy --name "consumer-svc" -e "dev"
