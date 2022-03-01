@@ -33,7 +33,7 @@ jobs:
       - uses: actions/setup-python@v2
       - uses: pre-commit/action@v2.0.0
         with:
-          extra_args: --config consumer/.pre-commit-config.yaml
+          extra_args: --all-files --config consumer/.pre-commit-config.yaml
       - name: Build
         run:  |
           pwd
@@ -49,3 +49,4 @@ jobs:
       - uses: golangci/golangci-lint-action@v2
         with:
           version: v1.29
+          working-directory: consumer

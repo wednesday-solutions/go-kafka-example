@@ -11,11 +11,11 @@ import (
 	"testing"
 	"time"
 
+	"consumer/internal/server"
+	"consumer/testutls"
 	. "github.com/agiledragon/gomonkey/v2"
 	"github.com/labstack/echo"
 	"github.com/stretchr/testify/assert"
-	"consumer/internal/server"
-	"consumer/testutls"
 )
 
 // Improve tests
