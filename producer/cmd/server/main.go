@@ -7,8 +7,8 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/rs/zerolog"
 
-	"github.com/wednesday-solutions/go-template-producer/internal/config"
-	"github.com/wednesday-solutions/go-template-producer/pkg/api"
+	"producer/internal/config"
+	"producer/pkg/api"
 )
 
 func main() {

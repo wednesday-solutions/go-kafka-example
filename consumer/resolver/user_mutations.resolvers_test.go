@@ -7,14 +7,14 @@ import (
 	"regexp"
 	"testing"
 
+	fm "consumer/graphql_models"
+	"consumer/pkg/utl/convert"
+	"consumer/resolver"
+	"consumer/testutls"
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"github.com/volatiletech/sqlboiler/boil"
-	fm "github.com/wednesday-solutions/go-template-consumer/graphql_models"
-	"github.com/wednesday-solutions/go-template-consumer/pkg/utl/convert"
-	"github.com/wednesday-solutions/go-template-consumer/resolver"
-	"github.com/wednesday-solutions/go-template-consumer/testutls"
 )
 
 func TestCreateUser(t *testing.T) {

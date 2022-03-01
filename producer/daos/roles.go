@@ -4,8 +4,9 @@ import (
 	"context"
 	"database/sql"
 
+	"producer/models"
+
 	"github.com/volatiletech/sqlboiler/boil"
-	"github.com/wednesday-solutions/go-template-producer/models"
 )
 
 // CreateRoleTx ...

@@ -1,4 +1,4 @@
-module github.com/wednesday-solutions/go-template-producer
+module producer
 
 go 1.14
 

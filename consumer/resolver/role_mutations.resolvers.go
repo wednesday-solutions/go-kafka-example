@@ -7,13 +7,13 @@ import (
 	"context"
 	"fmt"
 
-	gotemplate "github.com/wednesday-solutions/go-template-consumer"
-	"github.com/wednesday-solutions/go-template-consumer/daos"
-	"github.com/wednesday-solutions/go-template-consumer/graphql_models"
-	"github.com/wednesday-solutions/go-template-consumer/internal/middleware/auth"
-	"github.com/wednesday-solutions/go-template-consumer/models"
-	"github.com/wednesday-solutions/go-template-consumer/pkg/utl/convert"
-	resultwrapper "github.com/wednesday-solutions/go-template-consumer/pkg/utl/result_wrapper"
+	gotemplate "consumer"
+	"consumer/daos"
+	"consumer/graphql_models"
+	"consumer/internal/middleware/auth"
+	"consumer/models"
+	"consumer/pkg/utl/convert"
+	resultwrapper "consumer/pkg/utl/result_wrapper"
 )
 
 func (r *mutationResolver) CreateRole(

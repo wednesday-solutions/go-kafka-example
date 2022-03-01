@@ -7,9 +7,9 @@ import (
 
 	. "github.com/agiledragon/gomonkey/v2"
 	"github.com/stretchr/testify/assert"
-	"github.com/wednesday-solutions/go-template-producer/internal/config"
-	"github.com/wednesday-solutions/go-template-producer/internal/service"
-	"github.com/wednesday-solutions/go-template-producer/testutls"
+	"producer/internal/config"
+	"producer/internal/service"
+	"producer/testutls"
 )
 
 func TestSecure(t *testing.T) {

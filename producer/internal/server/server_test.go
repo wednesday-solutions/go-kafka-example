@@ -14,8 +14,8 @@ import (
 	. "github.com/agiledragon/gomonkey/v2"
 	"github.com/labstack/echo"
 	"github.com/stretchr/testify/assert"
-	"github.com/wednesday-solutions/go-template-producer/internal/server"
-	"github.com/wednesday-solutions/go-template-producer/testutls"
+	"producer/internal/server"
+	"producer/testutls"
 )
 
 // Improve tests
@@ -28,14 +28,15 @@ func TestNew(t *testing.T) {
 	response, err := testutls.MakeRequest(
 		testutls.RequestParameters{
 			E:          e,
-			Pathname:   "/",
+			Pathname:   "/producer-svc/",
 			HttpMethod: "GET",
 		},
 	)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
-	assert.Equal(t, response["data"], "Go template at your service!🍲")
+	fmt.Print("\n\n\nresponse", response)
+	assert.Equal(t, response["data"], "producer: Go template at your service!🍲")
 }
 
 type args struct {

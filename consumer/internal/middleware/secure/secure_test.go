@@ -5,9 +5,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"consumer/internal/middleware/secure"
 	"github.com/labstack/echo"
 	"github.com/stretchr/testify/assert"
-	"github.com/wednesday-solutions/go-template-consumer/internal/middleware/secure"
 )
 
 func echoHandler(mw ...echo.MiddlewareFunc) *echo.Echo {

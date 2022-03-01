@@ -14,8 +14,8 @@ import (
 	. "github.com/agiledragon/gomonkey/v2"
 	"github.com/labstack/echo"
 	"github.com/stretchr/testify/assert"
-	"github.com/wednesday-solutions/go-template-consumer/internal/server"
-	"github.com/wednesday-solutions/go-template-consumer/testutls"
+	"consumer/internal/server"
+	"consumer/testutls"
 )
 
 // Improve tests
@@ -35,7 +35,7 @@ func TestNew(t *testing.T) {
 	if err != nil {
 		t.Fatal(err.Error())
 	}
-	assert.Equal(t, response["data"], "Go template at your service!🍲")
+	assert.Equal(t, response["data"], "consumer: Go template at your service!🍲")
 }
 
 type args struct {

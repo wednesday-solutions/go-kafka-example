@@ -7,14 +7,15 @@ import (
 	"context"
 	"fmt"
 
+	"consumer/daos"
+	"consumer/graphql_models"
+	"consumer/internal/config"
+	"consumer/internal/middleware/auth"
+	"consumer/internal/service"
+	"consumer/pkg/utl/convert"
+	resultwrapper "consumer/pkg/utl/result_wrapper"
+
 	"github.com/volatiletech/null"
-	"github.com/wednesday-solutions/go-template-consumer/daos"
-	"github.com/wednesday-solutions/go-template-consumer/graphql_models"
-	"github.com/wednesday-solutions/go-template-consumer/internal/config"
-	"github.com/wednesday-solutions/go-template-consumer/internal/middleware/auth"
-	"github.com/wednesday-solutions/go-template-consumer/internal/service"
-	"github.com/wednesday-solutions/go-template-consumer/pkg/utl/convert"
-	resultwrapper "github.com/wednesday-solutions/go-template-consumer/pkg/utl/result_wrapper"
 )
 
 func (r *mutationResolver) Login(

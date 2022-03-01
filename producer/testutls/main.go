@@ -6,13 +6,14 @@ import (
 	"fmt"
 	"testing"
 
+	"producer/internal/config"
+	"producer/models"
+
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/joho/godotenv"
 	"github.com/volatiletech/null"
 	"github.com/volatiletech/sqlboiler/boil"
-	"github.com/wednesday-solutions/go-template-producer/internal/config"
-	"github.com/wednesday-solutions/go-template-producer/models"
 )
 
 type key string

@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"testing"
 
+	fm "consumer/graphql_models"
+	"consumer/resolver"
+	"consumer/testutls"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
-	fm "github.com/wednesday-solutions/go-template-consumer/graphql_models"
-	"github.com/wednesday-solutions/go-template-consumer/resolver"
-	"github.com/wednesday-solutions/go-template-consumer/testutls"
 )
 
 func TestUserNotification(t *testing.T) {

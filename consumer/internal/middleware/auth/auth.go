@@ -4,12 +4,13 @@ import (
 	"context"
 	"reflect"
 
+	"consumer/daos"
+	"consumer/models"
+	resultwrapper "consumer/pkg/utl/result_wrapper"
+
 	graphql2 "github.com/99designs/gqlgen/graphql"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
-	"github.com/wednesday-solutions/go-template-consumer/daos"
-	"github.com/wednesday-solutions/go-template-consumer/models"
-	resultwrapper "github.com/wednesday-solutions/go-template-consumer/pkg/utl/result_wrapper"
 )
 
 type key string

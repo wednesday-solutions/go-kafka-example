@@ -7,10 +7,11 @@ import (
 
 	"os"
 
+	models "consumer/models"
+	"consumer/pkg/utl/convert"
+	"consumer/resolver"
+
 	kafka "github.com/segmentio/kafka-go"
-	models "github.com/wednesday-solutions/go-template-consumer/models"
-	"github.com/wednesday-solutions/go-template-consumer/pkg/utl/convert"
-	"github.com/wednesday-solutions/go-template-consumer/resolver"
 )
 
 type KAFKA_TOPIC string

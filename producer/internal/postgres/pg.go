@@ -6,8 +6,9 @@ import (
 	"os"
 
 	// DB adapter
+	"producer/pkg/utl/db"
+
 	_ "github.com/lib/pq"
-	"github.com/wednesday-solutions/go-template-producer/pkg/utl/db"
 )
 
 // Connect ...

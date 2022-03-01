@@ -13,6 +13,11 @@ import (
 	"regexp"
 	"testing"
 
+	graphql "consumer/graphql_models"
+	"consumer/internal/middleware/auth"
+	"consumer/models"
+	"consumer/resolver"
+	testutls "consumer/testutls"
 	graphql2 "github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/handler/transport"
@@ -21,11 +26,6 @@ import (
 	"github.com/labstack/echo"
 	"github.com/stretchr/testify/assert"
 	"github.com/volatiletech/sqlboiler/boil"
-	graphql "github.com/wednesday-solutions/go-template-consumer/graphql_models"
-	"github.com/wednesday-solutions/go-template-consumer/internal/middleware/auth"
-	"github.com/wednesday-solutions/go-template-consumer/models"
-	"github.com/wednesday-solutions/go-template-consumer/resolver"
-	testutls "github.com/wednesday-solutions/go-template-consumer/testutls"
 )
 
 var parseTokenMock func(token string) (*jwt.Token, error)

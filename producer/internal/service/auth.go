@@ -4,9 +4,9 @@ import (
 	"crypto/sha1"
 	"os"
 
-	"github.com/wednesday-solutions/go-template-producer/internal/config"
-	"github.com/wednesday-solutions/go-template-producer/internal/jwt"
-	"github.com/wednesday-solutions/go-template-producer/pkg/utl/secure"
+	"producer/internal/config"
+	"producer/internal/jwt"
+	"producer/pkg/utl/secure"
 )
 
 // Secure returns new secure service
