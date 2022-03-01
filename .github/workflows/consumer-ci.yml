@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "consumer/**"
+      - "consumer/**/*.*"
       - ".github/workflows/consumer-ci.yml"
 
 jobs:

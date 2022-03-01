@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-        - "producer/**"
+        - "producer/**/*.*"
         - ".github/workflows/producer-ci.yml"
 
 jobs:
