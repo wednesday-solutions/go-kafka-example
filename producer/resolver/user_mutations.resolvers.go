@@ -7,7 +7,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
 
 	"github.com/volatiletech/null"
 	"github.com/wednesday-solutions/go-template-producer/daos"
@@ -18,18 +17,12 @@ import (
 	"github.com/wednesday-solutions/go-template-producer/models"
 	"github.com/wednesday-solutions/go-template-producer/pkg/utl/convert"
 	kafka "github.com/wednesday-solutions/go-template-producer/pkg/utl/kafkaservice"
-	throttle "github.com/wednesday-solutions/go-template-producer/pkg/utl/rate_throttle"
 	resultwrapper "github.com/wednesday-solutions/go-template-producer/pkg/utl/result_wrapper"
 )
 
 func (r *mutationResolver) CreateUser(
 	ctx context.Context,
 	input graphql_models.UserCreateInput) (*graphql_models.UserPayload, error) {
-	err := throttle.Check(ctx, 5, 10*time.Second)
-
-	if err != nil {
-		return nil, err
-	}
 
 	user := models.User{
 		Username:  null.StringFromPtr(input.Username),

@@ -17,30 +17,37 @@ const (
 
 func getBrokers(count int) []string {
 	broker := os.Getenv(fmt.Sprintf("KAFKA_HOST_%d", count))
+	fmt.Print("KAFKA_HOST: ", fmt.Sprintf("KAFKA_HOST_%d", count), "broker:", broker)
 	if broker == "" {
 		return []string{}
 	}
 	return append([]string{broker}, getBrokers(count+1)...)
 }
 
-var tokenWriter *kafka.Writer = kafka.NewWriter(kafka.WriterConfig{
-	Brokers:  getBrokers(1),
-	Topic:    string(ISSUED_TOKEN),
-	Balancer: &kafka.Hash{},
-})
-
-var newUserWriter *kafka.Writer = kafka.NewWriter(kafka.WriterConfig{
-	Brokers:  getBrokers(1),
-	Topic:    string(NEW_USER_CREATED),
-	Balancer: &kafka.RoundRobin{},
-})
+var tokenWriter *kafka.Writer
+var newUserWriter *kafka.Writer
 
 func Produce(ctx context.Context, topic KAFKA_TOPIC, key []byte, value []byte) {
 	var kafkaWriter *kafka.Writer
+
 	switch topic {
 	case ISSUED_TOKEN:
+		if tokenWriter == nil {
+			tokenWriter = kafka.NewWriter(kafka.WriterConfig{
+				Brokers:  getBrokers(1),
+				Topic:    string(ISSUED_TOKEN),
+				Balancer: &kafka.Hash{},
+			})
+		}
 		kafkaWriter = tokenWriter
 	case NEW_USER_CREATED:
+		if newUserWriter == nil {
+			newUserWriter = kafka.NewWriter(kafka.WriterConfig{
+				Brokers:  getBrokers(1),
+				Topic:    string(NEW_USER_CREATED),
+				Balancer: &kafka.RoundRobin{},
+			})
+		}
 		kafkaWriter = newUserWriter
 	}
 

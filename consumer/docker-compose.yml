@@ -12,9 +12,6 @@ services:
       - POSTGRES_PORT=${DB_PORT}
       - POSTGRES_DB=${DB_NAME}
 
-  redis:
-    image: redis:6-alpine
-    restart: always
 
   app:
     build: .
@@ -23,7 +20,6 @@ services:
       - ./.env.docker
     depends_on:
       - db
-      - redis
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
     environment:

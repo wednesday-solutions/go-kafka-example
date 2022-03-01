@@ -24,7 +24,6 @@ import (
 	"github.com/wednesday-solutions/go-template-consumer/internal/postgres"
 	"github.com/wednesday-solutions/go-template-consumer/internal/server"
 	kafka "github.com/wednesday-solutions/go-template-consumer/pkg/utl/kafkaservice"
-	throttle "github.com/wednesday-solutions/go-template-consumer/pkg/utl/rate_throttle"
 	"github.com/wednesday-solutions/go-template-consumer/resolver"
 )
 
@@ -49,8 +48,6 @@ func Start(cfg *config.Configuration) (*echo.Echo, error) {
 	e := server.New()
 
 	gqlMiddleware := authMw.GqlMiddleware()
-	// throttlerMiddleware puts the current user's IP address into context of gqlgen
-	throttlerMiddleware := throttle.GqlMiddleware()
 
 	playgroundHandler := playground.Handler("GraphQL playground", "/graphql")
 
@@ -72,14 +69,14 @@ func Start(cfg *config.Configuration) (*echo.Echo, error) {
 		res := c.Response()
 		graphqlHandler.ServeHTTP(res, req)
 		return nil
-	}, gqlMiddleware, throttlerMiddleware)
+	}, gqlMiddleware)
 
 	e.GET("/graphql", func(c echo.Context) error {
 		req := c.Request()
 		res := c.Response()
 		graphqlHandler.ServeHTTP(res, req)
 		return nil
-	}, gqlMiddleware, throttlerMiddleware)
+	}, gqlMiddleware)
 
 	graphqlHandler.AddTransport(transport.Websocket{
 		KeepAlivePingInterval: 10 * time.Second,

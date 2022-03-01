@@ -6,7 +6,6 @@ package resolver
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/volatiletech/null"
 	"github.com/wednesday-solutions/go-template-consumer/daos"
@@ -16,18 +15,12 @@ import (
 	"github.com/wednesday-solutions/go-template-consumer/internal/service"
 	"github.com/wednesday-solutions/go-template-consumer/models"
 	"github.com/wednesday-solutions/go-template-consumer/pkg/utl/convert"
-	throttle "github.com/wednesday-solutions/go-template-consumer/pkg/utl/rate_throttle"
 	resultwrapper "github.com/wednesday-solutions/go-template-consumer/pkg/utl/result_wrapper"
 )
 
 func (r *mutationResolver) CreateUser(
 	ctx context.Context,
 	input graphql_models.UserCreateInput) (*graphql_models.UserPayload, error) {
-	err := throttle.Check(ctx, 5, 10*time.Second)
-	if err != nil {
-		return nil, err
-	}
-
 	user := models.User{
 		Username:  null.StringFromPtr(input.Username),
 		Password:  null.StringFromPtr(input.Password),

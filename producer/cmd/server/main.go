@@ -20,6 +20,7 @@ func Setup() {
 	if envName == "" {
 		envName = "local"
 	}
+
 	err := godotenv.Load(fmt.Sprintf(".env.%s", envName))
 	if err != nil {
 		fmt.Print("error loading .env file")
