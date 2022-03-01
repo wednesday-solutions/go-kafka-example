@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - "consumer/**/*.*"
-      - ".github/workflows/consumer-ci.yml"
+      - consumer/**/*.*
+      - .github/workflows/consumer-ci.yml
 defaults:
  run:
   working-directory: consumer
