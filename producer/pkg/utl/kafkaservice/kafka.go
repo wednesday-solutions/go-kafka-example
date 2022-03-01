@@ -48,15 +48,16 @@ func Produce(ctx context.Context, topic KAFKA_TOPIC, key []byte, value []byte) {
 		fmt.Printf("Invalid topic: %s", topic)
 		return
 	}
+	fmt.Print("list of brokers:", getBrokers(1))
 	err := kafkaWriter.WriteMessages(ctx, kafka.Message{
 		// create an arbitrary message payload for the value
 		Value: value,
 	})
 	if err != nil {
-		panic("could not write message " + err.Error())
+		fmt.Print("could not write message " + err.Error())
 	}
 
 	// log a confirmation once the message is written
-	fmt.Printf("::published \ntopic: %s\nkey:%s\nvalue:%s", topic, key, value)
+	fmt.Printf("\n\n::published \ntopic: %s\nkey:%s\nvalue:%s", topic, key, value)
 
 }

@@ -32,18 +32,20 @@ func consumeIssuedToken(ctx context.Context, r *resolver.Resolver) {
 	// initialize a new reader with the brokers and topic
 	// the groupID identifies the consumer and prevents
 	// it from receiving duplicate messages
-
+	fmt.Print("Test me out\n\n")
 	issuedToken := kafka.NewReader(kafka.ReaderConfig{
 		Brokers: getBrokers(1),
 		Topic:   string(ISSUED_TOKEN),
 		GroupID: "my-group",
 	})
+	fmt.Print("22::Test me out\n\n")
 	for {
 		// here we will manual commit messages using FetchMessage instead of read message
 		msg, err := issuedToken.FetchMessage(ctx)
 		if err != nil {
-			panic("could not read message " + err.Error())
+			fmt.Print("could not read message " + err.Error())
 		}
+		fmt.Print("getBrokers::consumeIssuedToken", getBrokers(1))
 		// after receiving the message, log its value
 		var user models.User
 		e := json.Unmarshal(msg.Value, &user)
@@ -75,14 +77,15 @@ func consumeNewUserCreated(ctx context.Context, r *resolver.Resolver) {
 	})
 	for {
 		// the `ReadMessage` method blocks until we receive the next event
+		fmt.Print("getBrokers::consumeNewUserCreated", getBrokers(1))
 		msg, err := newUserCreatedReader.ReadMessage(ctx)
 		if err != nil {
-			panic("could not read message " + err.Error())
+			fmt.Print("\n\ncould not read message " + err.Error())
 		}
 		var user models.User
 		e := json.Unmarshal(msg.Value, &user)
 		if e != nil {
-			fmt.Print("error while unmarshalling", e)
+			fmt.Print("\n\nerror while unmarshalling", e)
 		} else {
 			fmt.Printf("\n\nNew user created: %d, partition: %d, offset: %d", user.ID, msg.Partition, msg.Offset)
 			for _, o := range r.Observers {

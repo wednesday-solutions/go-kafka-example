@@ -65,14 +65,14 @@ func Start(cfg *config.Configuration) (*echo.Echo, error) {
 	graphqlHandler.AroundOperations(func(ctx context.Context, next graphql2.OperationHandler) graphql2.ResponseHandler {
 		return authMw.GraphQLMiddleware(ctx, jwt, next)
 	})
-	e.POST("/graphql", func(c echo.Context) error {
+	e.POST("/producer-svc/graphql", func(c echo.Context) error {
 		req := c.Request()
 		res := c.Response()
 		graphqlHandler.ServeHTTP(res, req)
 		return nil
 	}, gqlMiddleware, throttlerMiddleware)
 
-	e.GET("/graphql", func(c echo.Context) error {
+	e.GET("/producer-svc/graphql", func(c echo.Context) error {
 		req := c.Request()
 		res := c.Response()
 		graphqlHandler.ServeHTTP(res, req)
@@ -104,7 +104,7 @@ func Start(cfg *config.Configuration) (*echo.Echo, error) {
 	})
 
 	// graphql playground
-	e.GET("/playground", func(c echo.Context) error {
+	e.GET("/producer-svc/playground", func(c echo.Context) error {
 		req := c.Request()
 		res := c.Response()
 		playgroundHandler.ServeHTTP(res, req)
