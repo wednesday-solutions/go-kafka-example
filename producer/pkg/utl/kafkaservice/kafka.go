@@ -15,24 +15,39 @@ const (
 	NEW_USER_CREATED KAFKA_TOPIC = "new-user-created"
 )
 
-var tokenWriter *kafka.Writer = kafka.NewWriter(kafka.WriterConfig{
-	Brokers:  []string{os.Getenv("KAFKA_HOST")},
-	Topic:    string(ISSUED_TOKEN),
-	Balancer: &kafka.Hash{},
-})
+func getBrokers(count int) []string {
+	broker := os.Getenv(fmt.Sprintf("KAFKA_HOST_%d", count))
+	fmt.Print("KAFKA_HOST: ", fmt.Sprintf("KAFKA_HOST_%d", count), "broker:", broker)
+	if broker == "" {
+		return []string{}
+	}
+	return append([]string{broker}, getBrokers(count+1)...)
+}
 
-var newUserWriter *kafka.Writer = kafka.NewWriter(kafka.WriterConfig{
-	Brokers:  []string{os.Getenv("KAFKA_HOST")},
-	Topic:    string(NEW_USER_CREATED),
-	Balancer: &kafka.RoundRobin{},
-})
+var tokenWriter *kafka.Writer
+var newUserWriter *kafka.Writer
 
 func Produce(ctx context.Context, topic KAFKA_TOPIC, key []byte, value []byte) {
 	var kafkaWriter *kafka.Writer
+
 	switch topic {
 	case ISSUED_TOKEN:
+		if tokenWriter == nil {
+			tokenWriter = kafka.NewWriter(kafka.WriterConfig{
+				Brokers:  getBrokers(1),
+				Topic:    string(ISSUED_TOKEN),
+				Balancer: &kafka.Hash{},
+			})
+		}
 		kafkaWriter = tokenWriter
 	case NEW_USER_CREATED:
+		if newUserWriter == nil {
+			newUserWriter = kafka.NewWriter(kafka.WriterConfig{
+				Brokers:  getBrokers(1),
+				Topic:    string(NEW_USER_CREATED),
+				Balancer: &kafka.RoundRobin{},
+			})
+		}
 		kafkaWriter = newUserWriter
 	}
 
@@ -40,15 +55,16 @@ func Produce(ctx context.Context, topic KAFKA_TOPIC, key []byte, value []byte) {
 		fmt.Printf("Invalid topic: %s", topic)
 		return
 	}
+	fmt.Print("list of brokers:", getBrokers(1))
 	err := kafkaWriter.WriteMessages(ctx, kafka.Message{
 		// create an arbitrary message payload for the value
 		Value: value,
 	})
 	if err != nil {
-		panic("could not write message " + err.Error())
+		fmt.Print("could not write message " + err.Error())
 	}
 
 	// log a confirmation once the message is written
-	fmt.Printf("::published \ntopic: %s\nkey:%s\nvalue:%s", topic, key, value)
+	fmt.Printf("\n\n::published \ntopic: %s\nkey:%s\nvalue:%s", topic, key, value)
 
 }

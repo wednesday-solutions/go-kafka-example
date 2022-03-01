@@ -1,9 +1,10 @@
 echo "name of the service is: $1 $2"
 
-copilot init -a "$1" -t "Load Balanced Web Service" -n "$1-$2-svc" -d ./Dockerfile
+copilot init -a "go-kafka-example" -t "Load Balanced Web Service" -n "producer-svc" -d ./Dockerfile
 
-copilot env init --name $2 --profile default --default-config
+copilot env init --name "dev" --profile default --default-config
 
-copilot storage init -n "$1-$2-cluster" -t Aurora -w "$1-$2-svc" --engine PostgreSQL --initial-db "$1_$2_db"
+copilot storage init -n "gke-producer-svc-cluster" -t Aurora -w "producer-svc" --engine PostgreSQL --initial-db "gke_producer_db"
 
-copilot deploy --name "$1-$2-svc" -e "$2"
+copilot deploy --name "producer-svc" -e "dev"
+

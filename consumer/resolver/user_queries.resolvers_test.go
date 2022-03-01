@@ -7,9 +7,7 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/gomodule/redigo/redis"
 	"github.com/joho/godotenv"
-	"github.com/rafaeljusto/redigomock"
 	"github.com/stretchr/testify/assert"
 	"github.com/volatiletech/sqlboiler/boil"
 	fm "github.com/wednesday-solutions/go-template-consumer/graphql_models"
@@ -37,12 +35,7 @@ func TestMe(t *testing.T) {
 			if err != nil {
 				fmt.Print("error loading .env file")
 			}
-			conn := redigomock.NewConn()
-			_ = &redis.Pool{
-				// Return the same connection mock for each Get() call.
-				Dial:    func() (redis.Conn, error) { return conn, nil },
-				MaxIdle: 10,
-			}
+
 			db, mock, err := sqlmock.New()
 			if err != nil {
 				t.Fatalf("an error '%s' was not expected when opening a stub database connection", err)

@@ -13,7 +13,6 @@ import (
 	"github.com/wednesday-solutions/go-template-consumer/internal/middleware/auth"
 	"github.com/wednesday-solutions/go-template-consumer/models"
 	"github.com/wednesday-solutions/go-template-consumer/pkg/utl/convert"
-	rediscache "github.com/wednesday-solutions/go-template-consumer/pkg/utl/redis_cache"
 	resultwrapper "github.com/wednesday-solutions/go-template-consumer/pkg/utl/result_wrapper"
 )
 
@@ -22,11 +21,11 @@ func (r *mutationResolver) CreateRole(
 	input graphql_models.RoleCreateInput) (*graphql_models.RolePayload, error) {
 
 	userID := auth.UserIDFromContext(ctx)
-	user, err := rediscache.GetUser(userID)
+	user, err := daos.FindUserByID(userID)
 	if err != nil {
 		return &graphql_models.RolePayload{}, resultwrapper.ResolverSQLError(err, "data")
 	}
-	userRole, err := rediscache.GetRole(convert.NullDotIntToInt(user.RoleID))
+	userRole, err := daos.FindRoleByID(convert.NullDotIntToInt(user.RoleID))
 	if err != nil {
 		return &graphql_models.RolePayload{}, resultwrapper.ResolverSQLError(err, "data")
 	}
