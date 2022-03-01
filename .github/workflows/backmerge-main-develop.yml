@@ -1,0 +1,23 @@
+name: Backmerge from main
+on:
+  push:
+    branches:
+      - main
+jobs:
+  merge-main-back-to-develop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.WORKFLOW_TOKEN }}
+      - name: Set Git config
+        run: |
+          git config --local user.email "github@wednesday.is"
+          git config --local user.name "Github Actions"
+      - name: Merge main back to develop
+        run: |
+          git fetch --unshallow
+          git checkout develop
+          git pull
+          git merge --no-ff main -m "Auto-merge main back to develop"
+          git push
