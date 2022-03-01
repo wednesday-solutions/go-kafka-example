@@ -12,7 +12,6 @@ import (
 )
 
 func main() {
-	fmt.Print("Check if the ci & cd runs only for the consumer")
 	Setup()
 }
 
