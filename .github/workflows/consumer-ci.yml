@@ -1,0 +1,43 @@
+name: Consumer CI
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "consumer/**"
+      - ".github/workflows/consumer-ci.yml"
+
+jobs:
+
+  lint-test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16.x
+      - name: Install pre-commit dependencies
+        run: |
+          cd consumer
+          go get github.com/fzipp/gocyclo
+          go get golang.org/x/tools/cmd/goimports
+          go get github.com/go-critic/go-critic/cmd/gocritic
+          go get golang.org/x/lint/golint
+          go get github.com/BurntSushi/toml/cmd/tomlv
+          go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.43.0
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - uses: pre-commit/action@v2.0.0
+      - name: Build
+        run:  go build ./...
+      - name: Test
+        run:  ./test.sh
+  golangci-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install golangci
+        uses: actions/checkout@v2
+      - uses: golangci/golangci-lint-action@v2
+        with:
+          version: v1.29
