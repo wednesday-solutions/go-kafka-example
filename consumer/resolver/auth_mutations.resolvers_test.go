@@ -7,13 +7,13 @@ import (
 	"regexp"
 	"testing"
 
+	fm "consumer/graphql_models"
+	"consumer/resolver"
+	"consumer/testutls"
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"github.com/volatiletech/sqlboiler/boil"
-	fm "github.com/wednesday-solutions/go-template-consumer/graphql_models"
-	"github.com/wednesday-solutions/go-template-consumer/resolver"
-	"github.com/wednesday-solutions/go-template-consumer/testutls"
 )
 
 func TestLogin(t *testing.T) {

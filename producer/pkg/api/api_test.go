@@ -21,12 +21,11 @@ import (
 	"github.com/labstack/echo"
 	_ "github.com/lib/pq"
 	"github.com/stretchr/testify/assert"
-	"github.com/volatiletech/sqlboiler/boil"
-	graphql "github.com/wednesday-solutions/go-template-producer/graphql_models"
-	"github.com/wednesday-solutions/go-template-producer/internal/config"
-	"github.com/wednesday-solutions/go-template-producer/internal/server"
-	"github.com/wednesday-solutions/go-template-producer/resolver"
-	"github.com/wednesday-solutions/go-template-producer/testutls"
+	graphql "producer/graphql_models"
+	"producer/internal/config"
+	"producer/internal/server"
+	"producer/resolver"
+	"producer/testutls"
 )
 
 func TestStart(t *testing.T) {
@@ -34,10 +33,9 @@ func TestStart(t *testing.T) {
 		cfg *config.Configuration
 	}
 	tests := []struct {
-		name        string
-		args        args
-		wantErr     bool
-		setDbCalled bool
+		name    string
+		args    args
+		wantErr bool
 
 		getTransportCalled           bool
 		postTransportCalled          bool
@@ -71,6 +69,17 @@ func TestStart(t *testing.T) {
 		if key == "JWT_SECRET" {
 			return testutls.MockJWTSecret
 		}
+		if key == "GKEPRODUCERSVCCLUSTER_SECRET" {
+			return `{
+  "dbClusterIdentifier": "xxx",
+  "password": "go_template_role456",
+  "dbname": "go_template",
+  "engine": "postgres",
+  "port": 5432,
+  "host": "localhost",
+  "username": "go_template_role"
+}`
+		}
 		return ""
 	})
 	ApplyFunc(sql.Open, func(driverName string, dataSourceName string) (*sql.DB, error) {
@@ -93,10 +102,6 @@ func TestStart(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ApplyFunc(boil.SetDB, func(db boil.Executor) {
-				fmt.Print("boil.SetDB called\n")
-				tt.setDbCalled = true
-			})
 
 			if tt.getTransportCalled || tt.postTransportCalled ||
 				tt.optionsTransportCalled || tt.multipartFormTransportCalled {
@@ -155,7 +160,7 @@ func TestStart(t *testing.T) {
 				}
 				jsonRes, err := testutls.MakeRequest(testutls.RequestParameters{
 					E:           e,
-					Pathname:    "/graphql",
+					Pathname:    "/producer-svc/graphql",
 					HttpMethod:  "POST",
 					RequestBody: testutls.MockWhitelistedQuery,
 					IsGraphQL:   false,
@@ -165,14 +170,12 @@ func TestStart(t *testing.T) {
 					log.Fatal(err)
 				}
 
-				assert.Equal(t, tt.setDbCalled, true)
-
 				// check if it returns schema correctly
 				assert.NotNil(t, jsonRes["data"].(map[string]interface{})["__schema"])
 
 				_, res, err := testutls.SimpleMakeRequest(testutls.RequestParameters{
 					E:          e,
-					Pathname:   "/playground",
+					Pathname:   "/producer-svc/playground",
 					HttpMethod: "GET",
 
 					IsGraphQL: false,

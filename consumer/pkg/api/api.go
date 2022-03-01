@@ -7,6 +7,15 @@ import (
 	"os"
 	"time"
 
+	graphql "consumer/graphql_models"
+	"consumer/internal/config"
+	"consumer/internal/jwt"
+	authMw "consumer/internal/middleware/auth"
+	"consumer/internal/postgres"
+	"consumer/internal/server"
+	kafka "consumer/pkg/utl/kafkaservice"
+	"consumer/resolver"
+
 	graphql2 "github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/handler/extension"
@@ -17,14 +26,6 @@ import (
 	"github.com/labstack/echo"
 	_ "github.com/lib/pq" // here
 	"github.com/volatiletech/sqlboiler/boil"
-	graphql "github.com/wednesday-solutions/go-template-consumer/graphql_models"
-	"github.com/wednesday-solutions/go-template-consumer/internal/config"
-	"github.com/wednesday-solutions/go-template-consumer/internal/jwt"
-	authMw "github.com/wednesday-solutions/go-template-consumer/internal/middleware/auth"
-	"github.com/wednesday-solutions/go-template-consumer/internal/postgres"
-	"github.com/wednesday-solutions/go-template-consumer/internal/server"
-	kafka "github.com/wednesday-solutions/go-template-consumer/pkg/utl/kafkaservice"
-	"github.com/wednesday-solutions/go-template-consumer/resolver"
 )
 
 // Start starts the API service

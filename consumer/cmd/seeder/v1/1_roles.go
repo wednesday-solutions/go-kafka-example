@@ -1,6 +1,6 @@
 package main
 
-import seeders "github.com/wednesday-solutions/go-template-consumer/cmd/seeder"
+import seeders "consumer/cmd/seeder"
 
 func main() {
 	_ = seeders.SeedData("roles", `INSERT INTO public.roles VALUES (1, 110, 'ADMIN');

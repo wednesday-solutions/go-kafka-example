@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/wednesday-solutions/go-template-producer/pkg/utl/secure"
+	"producer/pkg/utl/secure"
 )
 
 func TestPassword(t *testing.T) {

@@ -10,10 +10,10 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"github.com/volatiletech/sqlboiler/boil"
-	fm "github.com/wednesday-solutions/go-template-producer/graphql_models"
-	"github.com/wednesday-solutions/go-template-producer/models"
-	"github.com/wednesday-solutions/go-template-producer/resolver"
-	"github.com/wednesday-solutions/go-template-producer/testutls"
+	fm "producer/graphql_models"
+	"producer/models"
+	"producer/resolver"
+	"producer/testutls"
 )
 
 func TestMe(t *testing.T) {

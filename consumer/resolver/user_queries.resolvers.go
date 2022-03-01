@@ -6,12 +6,13 @@ package resolver
 import (
 	"context"
 
+	"consumer/daos"
+	"consumer/graphql_models"
+	"consumer/internal/middleware/auth"
+	"consumer/pkg/utl/convert"
+	resultwrapper "consumer/pkg/utl/result_wrapper"
+
 	"github.com/volatiletech/sqlboiler/queries/qm"
-	"github.com/wednesday-solutions/go-template-consumer/daos"
-	"github.com/wednesday-solutions/go-template-consumer/graphql_models"
-	"github.com/wednesday-solutions/go-template-consumer/internal/middleware/auth"
-	"github.com/wednesday-solutions/go-template-consumer/pkg/utl/convert"
-	resultwrapper "github.com/wednesday-solutions/go-template-consumer/pkg/utl/result_wrapper"
 )
 
 func (r *queryResolver) Me(ctx context.Context) (*graphql_models.User, error) {

@@ -13,6 +13,11 @@ import (
 	"testing"
 	"time"
 
+	graphql "consumer/graphql_models"
+	"consumer/internal/config"
+	"consumer/internal/server"
+	"consumer/resolver"
+	"consumer/testutls"
 	graphql2 "github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/handler/transport"
@@ -21,12 +26,6 @@ import (
 	"github.com/labstack/echo"
 	_ "github.com/lib/pq"
 	"github.com/stretchr/testify/assert"
-	"github.com/volatiletech/sqlboiler/boil"
-	graphql "github.com/wednesday-solutions/go-template-consumer/graphql_models"
-	"github.com/wednesday-solutions/go-template-consumer/internal/config"
-	"github.com/wednesday-solutions/go-template-consumer/internal/server"
-	"github.com/wednesday-solutions/go-template-consumer/resolver"
-	"github.com/wednesday-solutions/go-template-consumer/testutls"
 )
 
 func TestStart(t *testing.T) {
@@ -34,10 +33,9 @@ func TestStart(t *testing.T) {
 		cfg *config.Configuration
 	}
 	tests := []struct {
-		name        string
-		args        args
-		wantErr     bool
-		setDbCalled bool
+		name    string
+		args    args
+		wantErr bool
 
 		getTransportCalled           bool
 		postTransportCalled          bool
@@ -71,6 +69,20 @@ func TestStart(t *testing.T) {
 		if key == "JWT_SECRET" {
 			return testutls.MockJWTSecret
 		}
+		if key == "GKECONSUMERSVCCLUSTER_SECRET" {
+			return `{
+  "dbClusterIdentifier": "xxx",
+  "password": "go_template_role456",
+  "dbname": "go_template",
+  "engine": "postgres",
+  "port": 5432,
+  "host": "localhost",
+  "username": "go_template_role"
+}`
+		}
+		if key == "KAFKA_HOST_1" {
+			return `localhost:9092`
+		}
 		return ""
 	})
 	ApplyFunc(sql.Open, func(driverName string, dataSourceName string) (*sql.DB, error) {
@@ -93,10 +105,6 @@ func TestStart(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ApplyFunc(boil.SetDB, func(db boil.Executor) {
-				fmt.Print("boil.SetDB called\n")
-				tt.setDbCalled = true
-			})
 
 			if tt.getTransportCalled || tt.postTransportCalled ||
 				tt.optionsTransportCalled || tt.multipartFormTransportCalled {
@@ -164,9 +172,6 @@ func TestStart(t *testing.T) {
 				if err != nil {
 					log.Fatal(err)
 				}
-
-				assert.Equal(t, tt.setDbCalled, true)
-
 				// check if it returns schema correctly
 				assert.NotNil(t, jsonRes["data"].(map[string]interface{})["__schema"])
 

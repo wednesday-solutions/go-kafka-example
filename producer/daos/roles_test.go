@@ -9,8 +9,8 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"github.com/volatiletech/sqlboiler/boil"
-	"github.com/wednesday-solutions/go-template-producer/daos"
-	"github.com/wednesday-solutions/go-template-producer/models"
+	"producer/daos"
+	"producer/models"
 )
 
 func TestCreateRoleTx(t *testing.T) {

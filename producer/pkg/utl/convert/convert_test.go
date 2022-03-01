@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/volatiletech/null"
-	graphql "github.com/wednesday-solutions/go-template-producer/graphql_models"
-	"github.com/wednesday-solutions/go-template-producer/models"
+	graphql "producer/graphql_models"
+	"producer/models"
 )
 
 func TestStringToPointerString(t *testing.T) {

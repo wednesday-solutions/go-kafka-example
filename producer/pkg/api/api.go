@@ -7,6 +7,14 @@ import (
 	"os"
 	"time"
 
+	graphql "producer/graphql_models"
+	"producer/internal/config"
+	"producer/internal/jwt"
+	authMw "producer/internal/middleware/auth"
+	"producer/internal/postgres"
+	"producer/internal/server"
+	"producer/resolver"
+
 	graphql2 "github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/handler/extension"
@@ -17,13 +25,6 @@ import (
 	"github.com/labstack/echo"
 	_ "github.com/lib/pq" // here
 	"github.com/volatiletech/sqlboiler/boil"
-	graphql "github.com/wednesday-solutions/go-template-producer/graphql_models"
-	"github.com/wednesday-solutions/go-template-producer/internal/config"
-	"github.com/wednesday-solutions/go-template-producer/internal/jwt"
-	authMw "github.com/wednesday-solutions/go-template-producer/internal/middleware/auth"
-	"github.com/wednesday-solutions/go-template-producer/internal/postgres"
-	"github.com/wednesday-solutions/go-template-producer/internal/server"
-	"github.com/wednesday-solutions/go-template-producer/resolver"
 )
 
 // Start starts the API service
