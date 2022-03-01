@@ -3,7 +3,7 @@ package resolver
 import (
 	"sync"
 
-	fm "github.com/wednesday-solutions/go-template-producer/graphql_models"
+	fm "producer/graphql_models"
 )
 
 // This file will not be regenerated automatically.

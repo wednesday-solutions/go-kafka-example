@@ -5,11 +5,11 @@ import (
 	"os"
 	"testing"
 
+	"consumer/internal/config"
+	"consumer/internal/service"
+	"consumer/testutls"
 	. "github.com/agiledragon/gomonkey/v2"
 	"github.com/stretchr/testify/assert"
-	"github.com/wednesday-solutions/go-template-consumer/internal/config"
-	"github.com/wednesday-solutions/go-template-consumer/internal/service"
-	"github.com/wednesday-solutions/go-template-consumer/testutls"
 )
 
 func TestSecure(t *testing.T) {

@@ -5,9 +5,10 @@ import (
 	"database/sql"
 	"fmt"
 
+	"producer/models"
+
 	"github.com/volatiletech/sqlboiler/boil"
 	"github.com/volatiletech/sqlboiler/queries/qm"
-	"github.com/wednesday-solutions/go-template-producer/models"
 )
 
 // FindUserByUserName finds user by username

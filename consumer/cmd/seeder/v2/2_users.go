@@ -4,11 +4,12 @@ import (
 	"context"
 	"fmt"
 
+	seeders "consumer/cmd/seeder"
+	"consumer/internal/postgres"
+	"consumer/models"
+	"consumer/pkg/utl/secure"
+
 	"github.com/volatiletech/sqlboiler/queries/qm"
-	seeders "github.com/wednesday-solutions/go-template-consumer/cmd/seeder"
-	"github.com/wednesday-solutions/go-template-consumer/internal/postgres"
-	"github.com/wednesday-solutions/go-template-consumer/models"
-	"github.com/wednesday-solutions/go-template-consumer/pkg/utl/secure"
 )
 
 func main() {
