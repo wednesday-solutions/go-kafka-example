@@ -22,7 +22,6 @@ jobs:
           go-version: 1.16.x
       - name: Install pre-commit dependencies
         run: |
-          pwd
           go get github.com/fzipp/gocyclo
           go get golang.org/x/tools/cmd/goimports
           go get github.com/go-critic/go-critic/cmd/gocritic
@@ -32,8 +31,6 @@ jobs:
         working-directory: ./
       - uses: actions/setup-python@v2
       - uses: pre-commit/action@v2.0.0
-        with:
-          extra_args: --all-files --config consumer/.pre-commit-config.yaml
       - name: Build
         run:  |
           pwd

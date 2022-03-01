@@ -34,7 +34,7 @@ func (r *mutationResolver) CreateRole(
 		Name:        input.Name,
 	}
 	if userRole.AccessLevel != int(gotemplate.SuperAdminRole) {
-		return &graphql_models.RolePayload{}, fmt.Errorf("You don't appear to have enough access level for this request ")
+		return &graphql_models.RolePayload{}, fmt.Errorf("you don't appear to have enough access level for this request ")
 	}
 
 	newRole, err := daos.CreateRoleTx(role, nil)

@@ -14,6 +14,8 @@ import (
 func main() {
 	Setup()
 }
+
+// Setup ...
 func Setup() {
 	envName := os.Getenv("ENVIRONMENT_NAME")
 
