@@ -7,30 +7,38 @@ on:
     paths:
       - "consumer/**/*.*"
       - ".github/workflows/consumer-ci.yml"
-
+defaults:
+ run:
+  working-directory: consumer
 jobs:
 
   lint-test-build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Install Go
         uses: actions/setup-go@v2
         with:
           go-version: 1.16.x
       - name: Install pre-commit dependencies
         run: |
-          cd consumer
+          pwd
           go get github.com/fzipp/gocyclo
           go get golang.org/x/tools/cmd/goimports
           go get github.com/go-critic/go-critic/cmd/gocritic
           go get golang.org/x/lint/golint
           go get github.com/BurntSushi/toml/cmd/tomlv
           go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.43.0
-      - uses: actions/checkout@v2
+        working-directory: ./
       - uses: actions/setup-python@v2
       - uses: pre-commit/action@v2.0.0
+        with:
+          extra_args: --config consumer/.pre-commit-config.yaml
       - name: Build
-        run:  go build ./...
+        run:  |
+          pwd
+          go build ./...
+        working-directory: consumer
       - name: Test
         run:  ./test.sh
   golangci-lint:
