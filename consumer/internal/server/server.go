@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"os/signal"
@@ -15,11 +16,12 @@ import (
 	"github.com/labstack/echo/middleware"
 )
 
-// New instantates new Echo server
+// New instantiates new Echo server
 func New() *echo.Echo {
 	e := echo.New()
 	e.Use(middleware.Logger(), middleware.Recover(), secure.CORS(), secure.Headers())
 	e.GET("/", healthCheck)
+	e.GET("yo", what)
 	e.Validator = &CustomValidator{V: validator.New()}
 	custErr := &customErrHandler{e: e}
 	e.HTTPErrorHandler = custErr.handler
@@ -33,6 +35,19 @@ type response struct {
 
 func healthCheck(c echo.Context) error {
 	return c.JSON(http.StatusOK, response{Data: "consumer: Go template at your service!🍲"})
+}
+
+func what(ctx echo.Context) error {
+	resp, err := http.Get("http://localhost:9001/say-what")
+	if err != nil {
+
+	}
+	defer resp.Body.Close()
+	body, err := io.ReadAll(resp.Body)
+	data := string(body)
+	return ctx.JSON(http.StatusOK, response{
+		data,
+	})
 }
 
 // Config represents server specific config

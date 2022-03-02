@@ -20,6 +20,7 @@ func New() *echo.Echo {
 	e := echo.New()
 	e.Use(middleware.Logger(), middleware.Recover(), secure.CORS(), secure.Headers())
 	e.GET("/producer-svc/", healthCheck)
+	e.GET("/say-what", what)
 	e.Validator = &CustomValidator{V: validator.New()}
 	custErr := &customErrHandler{e: e}
 	e.HTTPErrorHandler = custErr.handler
@@ -33,6 +34,12 @@ type response struct {
 
 func healthCheck(c echo.Context) error {
 	return c.JSON(http.StatusOK, response{Data: "producer: Go template at your service!🍲"})
+}
+
+func what(ctx echo.Context) error {
+	return ctx.JSON(http.StatusOK, response{
+		"yo",
+	})
 }
 
 // Config represents server specific config
