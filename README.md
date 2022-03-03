@@ -1,5 +1,22 @@
 # go-kafka-example
 
+
+## Prerequisites
+
+
+- docker
+- zookeeper
+- kafka
+- aws copilot 
+
+This is a monorepo setup with support for CI/CD. The applications in the monorepo are based on [go-template](https://github.com/wednesday-solutions/go-template)
+
+The [producer](./producer) publishes messages to 2 kafka topics - issued-token, new-user-created. The [consumer](./consumer) consumes these messages. This is a working setup for message broking in golang using kafka in a micro-service environment.
+
+The consumer also exposes an API that makes an inter-service API call to the producer to fulfil the request. 
+
+This application is deployed on AWS ECS using AWS Copilot. They are deployed as 2 services in a cluster - hence are able to use the the service discover DNS for interservice communication. 
+
 ## Run the application
 
 1. Start zookeeper
