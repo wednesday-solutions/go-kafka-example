@@ -12,12 +12,12 @@
         ```
 3. Start the consumer 
         ```
-        cd consumer 
+        cd consumer &&
         go run cmd/server/main.go
         ```
 4. Start the producer
         ```
-        cd ../producer
+        cd ../producer &&
         go run cmd/server/main.go
         ```
 
@@ -32,7 +32,7 @@ java -jar ~/wednesday/kafka-visualizer/rest/target/rest-1.0-SNAPSHOT.jar --zooke
 
 ## Kafka cli commands
 
-- descirbe all consumers, topics and partition detiails
+- describe all consumers, topics and partition detiails
 ```
 kafka-consumer-groups --bootstrap-server localhost:9092 --all-groups --describe
 ```

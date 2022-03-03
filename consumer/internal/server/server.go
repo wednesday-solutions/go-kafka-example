@@ -2,9 +2,11 @@ package server
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"os"
 	"os/signal"
 	"time"
@@ -21,7 +23,7 @@ func New() *echo.Echo {
 	e := echo.New()
 	e.Use(middleware.Logger(), middleware.Recover(), secure.CORS(), secure.Headers())
 	e.GET("/", healthCheck)
-	e.GET("yo", what)
+	e.GET("ping", what)
 	e.Validator = &CustomValidator{V: validator.New()}
 	custErr := &customErrHandler{e: e}
 	e.HTTPErrorHandler = custErr.handler
@@ -37,17 +39,29 @@ func healthCheck(c echo.Context) error {
 	return c.JSON(http.StatusOK, response{Data: "consumer: Go template at your service!🍲"})
 }
 
-func what(ctx echo.Context) error {
-	resp, err := http.Get("http://localhost:9001/say-what")
-	if err != nil {
+type PongResponse struct {
+	Ok string `json:"ok"`
+}
 
+func what(ctx echo.Context) error {
+	producerServiceURL := url.URL{Scheme: "http", Host: os.Getenv("PRODUCER_SVC_ENDPOINT"), Path: "/ping-what"}
+	fmt.Println(producerServiceURL.String())
+	resp, err := http.Get(producerServiceURL.String())
+	if err != nil {
+		fmt.Println(err, "couldn't get a response")
 	}
 	defer resp.Body.Close()
+	var m PongResponse
 	body, err := io.ReadAll(resp.Body)
-	data := string(body)
-	return ctx.JSON(http.StatusOK, response{
-		data,
-	})
+	if err != nil {
+		fmt.Println(err, "couldn't read the body")
+	}
+	unmarshalErr := json.Unmarshal(body, &m)
+	if unmarshalErr != nil {
+		fmt.Println(unmarshalErr, "couldn't unmarshall the body")
+	}
+	fmt.Println(m, "unmarshalledResponse", body)
+	return ctx.JSON(http.StatusOK, m)
 }
 
 // Config represents server specific config
