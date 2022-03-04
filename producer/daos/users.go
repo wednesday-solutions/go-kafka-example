@@ -67,6 +67,7 @@ func FindAllUsersWithCount(queryMods []qm.QueryMod) (models.UserSlice, int64, er
 	if err != nil {
 		return models.UserSlice{}, 0, err
 	}
+	queryMods = append(queryMods, qm.Offset(0))
 	count, err := models.Users(queryMods...).Count(context.Background(), contextExecutor)
 	return users, count, err
 
