@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"fmt"
 	"reflect"
 
 	"consumer/daos"
@@ -115,7 +116,8 @@ func GraphQLMiddleware(
 		if requiresSuperAdmin {
 
 			isSuperAdmin := false
-			if claims["role"].(string) == "ADMIN" {
+			fmt.Println("role::::::::::::::", claims["role"])
+			if claims["role"].(string) == "SUPER_ADMIN" {
 				isSuperAdmin = true
 			}
 			if !isSuperAdmin {

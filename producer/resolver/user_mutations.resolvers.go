@@ -7,6 +7,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"math/rand"
+	"strconv"
 
 	"producer/daos"
 	"producer/graphql_models"
@@ -57,7 +59,7 @@ func (r *mutationResolver) CreateUser(
 	go kafka.Produce(
 		context.Background(),
 		kafka.NEW_USER_CREATED,
-		[]byte("something"),
+		[]byte(strconv.Itoa(rand.Int())),
 		b,
 	)
 	return &graphql_models.UserPayload{User: graphUser}, err

@@ -19,7 +19,7 @@ import (
 func New() *echo.Echo {
 	e := echo.New()
 	e.Use(middleware.Logger(), middleware.Recover(), secure.CORS(), secure.Headers())
-	e.GET("/producer-svc/", healthCheck)
+	e.GET("/producer-svc", healthCheck)
 	e.GET("/ping-what", sayPong)
 	e.Validator = &CustomValidator{V: validator.New()}
 	custErr := &customErrHandler{e: e}

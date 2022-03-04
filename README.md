@@ -1,5 +1,22 @@
 # go-kafka-example
 
+
+## Prerequisites
+
+
+- docker
+- zookeeper
+- kafka
+- aws copilot 
+
+This is a monorepo setup with support for CI/CD. The applications in the monorepo are based on [go-template](https://github.com/wednesday-solutions/go-template)
+
+The [producer](./producer) publishes messages to 2 kafka topics - issued-token, new-user-created. The [consumer](./consumer) consumes these messages. This is a working setup for message broking in golang using kafka in a micro-service environment.
+
+The consumer also exposes an API that makes an inter-service API call to the producer to fulfil the request. 
+
+This application is deployed on AWS ECS using AWS Copilot. They are deployed as 2 services in a cluster - hence are able to use the the service discover DNS for interservice communication. 
+
 ## Run the application
 
 1. Start zookeeper
@@ -60,3 +77,8 @@ Here is a small write up to explain how kafka works
 - Kafka has retention policies. For example after 24 hours the kafka queue will be cleaned.
 - Kafka can also store all records on a persistent storage. This makes it fault-tolerant and durable. So if the broker goes down it can recover when it comes back up.
 - Replication Factor: Kafka replicates partitions so when a broker goes down, a backup parition takes over and processing can resume. This is configured using the replication factor. if you have 3, it means you have 3 copies of a partition. 1 leader and 2 backups. This means we can tolerate upto 2 brokers going down at the same time.
+
+
+## Accessing the APIs
+
+The producer and the consumer service come with out of the box support for GraphQL playground, however if you would like to generate the postman collections you can use this [grapqhl-testkit](https://www.npmjs.com/package/graphql-testkit) utility written by the folks [@wednesday-solutions](https://github.com/wednesday-solutions)

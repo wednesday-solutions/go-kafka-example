@@ -10,10 +10,10 @@ type: Load Balanced Web Service
 http:
   # Requests to this path will be forwarded to your service.
   # To match all requests you can use the "/" path.
-  path: "producer-svc*"
-  header:
+  path: 'producer-svc*'
+  header: 
   # You can specify a custom health check path. The default is "/".
-  healthcheck: "/producer-svc/"
+  healthcheck: '/producer-svc'
 
 # Configuration for your containers and service.
 image:
