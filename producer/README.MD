@@ -1,7 +1,9 @@
 # Producer
 
+This application publishes messages to 2 topic
+- [issued-token](https://github.com/wednesday-solutions/go-kafka-example/blob/main/producer/resolver/auth_mutations.resolvers.go#L66)
+- [new-user-created](https://github.com/wednesday-solutions/go-kafka-example/blob/main/producer/resolver/user_mutations.resolvers.go#L57)
 
-The producer publishes to 2 topics
 - issued-token
   To publish a message on this topic simply login
   ```

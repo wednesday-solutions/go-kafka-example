@@ -2,7 +2,7 @@
 
 This application consumes messages from 2 topcis - [issued-token](https://github.com/wednesday-solutions/go-kafka-example/blob/main/consumer/pkg/utl/kafkaservice/kafka.go#L36) and [new-user-created](https://github.com/wednesday-solutions/go-kafka-example/blob/main/consumer/pkg/utl/kafkaservice/kafka.go#L71) 
 
-The reader responsible for reading messages on the "issued-token" topic requires manual committing of messages and hence used the FetchMessage API coupled with the CommitMessages API from kafka-go. [#] (https://github.com/wednesday-solutions/go-kafka-example/blob/main/consumer/pkg/utl/kafkaservice/kafka.go#L43)
+The reader responsible for reading messages on the "issued-token" topic requires manual committing of messages and hence used the FetchMessage API coupled with the CommitMessages API from kafka-go. [#](https://github.com/wednesday-solutions/go-kafka-example/blob/main/consumer/pkg/utl/kafkaservice/kafka.go#L43)
 
 However in case of the "new-user-created" topic committing of messages is delegated to kafka-go itself using the ReadMessage API. [#](https://github.com/wednesday-solutions/go-kafka-example/blob/main/consumer/pkg/utl/kafkaservice/kafka.go#L78)
 
