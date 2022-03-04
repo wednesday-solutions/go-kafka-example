@@ -28,7 +28,7 @@ func TestNew(t *testing.T) {
 	response, err := testutls.MakeRequest(
 		testutls.RequestParameters{
 			E:          e,
-			Pathname:   "/producer-svc/",
+			Pathname:   "/producer-svc",
 			HttpMethod: "GET",
 		},
 	)

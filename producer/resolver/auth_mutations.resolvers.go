@@ -7,7 +7,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strconv"
 
+	"math/rand"
 	"producer/daos"
 	"producer/graphql_models"
 	"producer/internal/config"
@@ -66,7 +68,7 @@ func (r *mutationResolver) Login(
 	go kafka.Produce(
 		context.Background(),
 		kafka.ISSUED_TOKEN,
-		[]byte("something"),
+		[]byte(strconv.Itoa(rand.Int())),
 		b,
 	)
 	return &graphql_models.LoginResponse{Token: token, RefreshToken: refreshToken}, nil
