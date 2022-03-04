@@ -8,8 +8,8 @@ However in case of the "new-user-created" topic committing of messages is delega
 
 The application comes with out of the box support for graphql subscriptions. For the purpose of demoing the flow of orchestrating subscritpions on consumption of messages the userNotification subscritpion is triggered when the a new token is issued or a new user is created. 
 
-[new-user-created](https://github.com/wednesday-solutions/go-kafka-example/blob/main/consumer/resolver/user_mutations.resolvers.go#L47-L51)
-[issued-token](https://github.com/wednesday-solutions/go-kafka-example/blob/main/consumer/pkg/utl/kafkaservice/kafka.go#L54-L56)
+- [new-user-created](https://github.com/wednesday-solutions/go-kafka-example/blob/main/consumer/resolver/user_mutations.resolvers.go#L47-L51)
+- [issued-token](https://github.com/wednesday-solutions/go-kafka-example/blob/main/consumer/pkg/utl/kafkaservice/kafka.go#L54-L56)
 
 You can use the following subscription to receive notifications. 
 
