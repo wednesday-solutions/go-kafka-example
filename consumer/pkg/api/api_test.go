@@ -71,14 +71,14 @@ func TestStart(t *testing.T) {
 		}
 		if key == "GKECONSUMERSVCCLUSTER_SECRET" {
 			return `{
-  "dbClusterIdentifier": "xxx",
-  "password": "go_template_role456",
-  "dbname": "go_template",
-  "engine": "postgres",
-  "port": 5432,
-  "host": "localhost",
-  "username": "go_template_role"
-}`
+		  "dbClusterIdentifier": "xxx",
+		  "password": "go_template_role456",
+		  "dbname": "go_template",
+		  "engine": "postgres",
+		  "port": 5432,
+		  "host": "localhost",
+		  "username": "go_template_role"
+		}`
 		}
 		if key == "KAFKA_HOST_1" {
 			return `localhost:9092`
