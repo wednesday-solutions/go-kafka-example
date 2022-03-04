@@ -1,15 +1,15 @@
 package jwt_test
 
 import (
-	"producer/internal/jwt"
-	"producer/models"
-	"producer/testutls"
 	"database/sql/driver"
 	"github.com/DATA-DOG/go-sqlmock"
 	jwtgo "github.com/dgrijalva/jwt-go"
 	"github.com/stretchr/testify/assert"
 	"github.com/volatiletech/null"
 	"log"
+	"producer/internal/jwt"
+	"producer/models"
+	"producer/testutls"
 	"regexp"
 	"strings"
 	"testing"
