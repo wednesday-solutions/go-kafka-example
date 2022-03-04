@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"net/url"
 	"os"
 	"os/signal"
 	"time"
@@ -44,9 +43,8 @@ type PongResponse struct {
 }
 
 func what(ctx echo.Context) error {
-	producerServiceURL := url.URL{Scheme: "http", Host: os.Getenv("PRODUCER_SVC_ENDPOINT"), Path: "/ping-what"}
-	fmt.Println(producerServiceURL.String())
-	resp, err := http.Get(producerServiceURL.String())
+	producerServiceURL := os.Getenv("PRODUCER_SVC_ENDPOINT") + "/ping-what"
+	resp, err := http.Get(producerServiceURL)
 	if err != nil {
 		fmt.Println(err, "couldn't get a response")
 	}
