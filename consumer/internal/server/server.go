@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -46,19 +47,18 @@ func what(ctx echo.Context) error {
 	producerServiceURL := os.Getenv("PRODUCER_SVC_ENDPOINT") + "/ping-what"
 	resp, err := http.Get(producerServiceURL)
 	if err != nil {
-		fmt.Println(err, "couldn't get a response")
+		return errors.New("couldn't get a response, \t" + err.Error())
 	}
 	defer resp.Body.Close()
 	var m PongResponse
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println(err, "couldn't read the body")
+		return errors.New("couldn't read the response body, \t" + err.Error())
 	}
 	unmarshalErr := json.Unmarshal(body, &m)
 	if unmarshalErr != nil {
-		fmt.Println(unmarshalErr, "couldn't unmarshall the body")
+		return errors.New("couldn't unmarshall the response body \t" + unmarshalErr.Error())
 	}
-	fmt.Println(m, "unmarshalledResponse", body)
 	return ctx.JSON(http.StatusOK, m)
 }
 
