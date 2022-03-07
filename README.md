@@ -82,3 +82,9 @@ Here is a small write up to explain how kafka works
 ## Accessing the APIs
 
 The producer and the consumer service come with out of the box support for GraphQL playground, however if you would like to generate the postman collections you can use this [grapqhl-testkit](https://www.npmjs.com/package/graphql-testkit) utility written by the folks [@wednesday-solutions](https://github.com/wednesday-solutions)
+
+## Inter Service APIs
+
+If service discovery endpoints are configured for the consumer and producer services, it allows for inter-service requests. Checkout this example for inter-service communication between the consumer and the  producer services, the consumer exposes a route ([/ping](https://github.com/wednesday-solutions/go-kafka-example/blob/main/consumer/internal/server/server.go#L25)) which on GET requests will make a GET request to the producer service’s ([/producer-svc/ping-what](https://github.com/wednesday-solutions/go-kafka-example/blob/main/producer/internal/server/server.go#L23)) route. The response from the producer is interpreted by the consumer and the response is served.
+
+Provide the producer’s service discovery endpoint as an environment variable([PRODUCER_SVC_ENDPOINT](https://github.com/wednesday-solutions/go-kafka-example/blob/main/consumer/.env.develop#L24)), which will be used by the consumer. When developing locally, the environment variable is [set](https://github.com/wednesday-solutions/go-kafka-example/blob/main/consumer/.env.local#L28) to match the local endpoint of the producer server.
