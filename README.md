@@ -92,3 +92,11 @@ Provide the producer’s service discovery endpoint as an environment variable([
 ## Built in retry mechanism
 
 If there is an issue while processing the incoming message we write the message to a side-topic. The consumer of the side topic retries messages a fixed number of times with an exponential backoff interval. If the message isn't processed after that, it's sent to a dead-letter-queue.
+
+In order to prevent message bloat and for each of the individual consumers to handle updation of count the Scheduler will update the count in redis based on hash of topic, message. We don't use key cause it's possible that the key was randomly generated and you keep getting a unique hash. This should be unique. If the same message is being sent multiple times there is something wrong.
+
+When retrying the first time we will schedule a job to execute in expBackOff(retryCount + 1) to drop that key from the cache.
+
+- [Publish message to a side topic](./consumer/pkg/utl/kafkaservice/kafka.go#L71)
+- [Retry with exponential backoff using redis so that container teardown doesn't impact retry logic](./consumer/pkg/utl/kafkaservice/redis_scheduler.go#L142)
+- [Publish message to a dead letter queue after max retries are exhausted](./consumer/pkg/utl/kafkaservice/redis_scheduler.go#L138)

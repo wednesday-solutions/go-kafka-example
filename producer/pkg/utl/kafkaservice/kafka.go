@@ -11,8 +11,9 @@ import (
 type KAFKA_TOPIC string
 
 const (
-	ISSUED_TOKEN     KAFKA_TOPIC = "issued-token"
-	NEW_USER_CREATED KAFKA_TOPIC = "new-user-created"
+	ISSUED_TOKEN         KAFKA_TOPIC = "issued-token"
+	NEW_USER_CREATED     KAFKA_TOPIC = "new-user-created"
+	SIDE_TOPIC_FOR_RETRY KAFKA_TOPIC = "side-topic-for-retry"
 )
 
 func getBrokers(count int) []string {
@@ -26,6 +27,7 @@ func getBrokers(count int) []string {
 
 var tokenWriter *kafka.Writer
 var newUserWriter *kafka.Writer
+var sideTopicWriter *kafka.Writer
 
 func Produce(ctx context.Context, topic KAFKA_TOPIC, key []byte, value []byte) {
 	var kafkaWriter *kafka.Writer
@@ -45,6 +47,16 @@ func Produce(ctx context.Context, topic KAFKA_TOPIC, key []byte, value []byte) {
 			newUserWriter = kafka.NewWriter(kafka.WriterConfig{
 				Brokers:  getBrokers(1),
 				Topic:    string(NEW_USER_CREATED),
+				Balancer: &kafka.RoundRobin{},
+			})
+		}
+		kafkaWriter = newUserWriter
+
+	case SIDE_TOPIC_FOR_RETRY:
+		if sideTopicWriter == nil {
+			sideTopicWriter = kafka.NewWriter(kafka.WriterConfig{
+				Brokers:  getBrokers(1),
+				Topic:    string(SIDE_TOPIC_FOR_RETRY),
 				Balancer: &kafka.RoundRobin{},
 			})
 		}
