@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"math/rand"
+	"strconv"
 
 	"os"
 
@@ -17,9 +19,17 @@ import (
 type KAFKA_TOPIC string
 
 const (
-	ISSUED_TOKEN     = "issued-token"
-	NEW_USER_CREATED = "new-user-created"
+	ISSUED_TOKEN         = "issued-token"
+	NEW_USER_CREATED     = "new-user-created"
+	SIDE_TOPIC_FOR_RETRY = "side-topic-for-retry"
+	DEAD_LETTER_QUEUE    = "dead-letter-queue"
 )
+
+type RetryMessage struct {
+	Topic   string
+	Message []byte
+	Key     string
+}
 
 func getBrokers(count int) []string {
 	broker := os.Getenv(fmt.Sprintf("KAFKA_HOST_%d", count))
@@ -48,7 +58,7 @@ func consumeIssuedToken(ctx context.Context, r *resolver.Resolver) {
 		var user models.User
 		e := json.Unmarshal(msg.Value, &user)
 		if e != nil {
-			fmt.Print("error while unmarshalling", e)
+			fmt.Print("consumeIssuedToken::error while unmarshalling.\n", e)
 		} else {
 			fmt.Printf("\n\nNew token issued by user:%d, partition: %d, offset: %d", user.ID, msg.Partition, msg.Offset)
 			for _, o := range r.Observers {
@@ -58,6 +68,15 @@ func consumeIssuedToken(ctx context.Context, r *resolver.Resolver) {
 				fmt.Printf("failed to commit message. "+
 					"Partition: %d, offset: %d", msg.Partition, msg.Offset)
 			} else {
+				// this is just an example of how to push to the side topic for retry
+				byteUser, _ := json.Marshal(user)
+				retryMessage := RetryMessage{
+					Topic:   ISSUED_TOKEN,
+					Message: byteUser,
+					Key:     string(msg.Key),
+				}
+				byteRetryMessage, _ := json.Marshal(retryMessage)
+				go Produce(context.Background(), SIDE_TOPIC_FOR_RETRY, []byte(strconv.Itoa(rand.Int())), byteRetryMessage)
 				fmt.Print("\n\ncommited message")
 			}
 		}
@@ -82,7 +101,7 @@ func consumeNewUserCreated(ctx context.Context, r *resolver.Resolver) {
 		var user models.User
 		e := json.Unmarshal(msg.Value, &user)
 		if e != nil {
-			fmt.Print("\n\nerror while unmarshalling", e)
+			fmt.Print("consumeNewUserCreated::\n\nerror while unmarshalling.\n", e)
 		} else {
 			fmt.Printf("\n\nNew user created: %d, partition: %d, offset: %d", user.ID, msg.Partition, msg.Offset)
 			for _, o := range r.Observers {
@@ -92,8 +111,50 @@ func consumeNewUserCreated(ctx context.Context, r *resolver.Resolver) {
 	}
 }
 
+func consumeSideTopic(ctx context.Context, r *resolver.Resolver) {
+	sideTopic := kafka.NewReader(kafka.ReaderConfig{
+		Brokers: getBrokers(1),
+		Topic:   string(SIDE_TOPIC_FOR_RETRY),
+		GroupID: "my-group",
+	})
+	for {
+		msg, err := sideTopic.ReadMessage(ctx)
+		if err != nil {
+			fmt.Print("could not read message " + err.Error())
+		}
+		// after receiving the message, log its value
+		var retryMessage RetryMessage
+		fmt.Println(retryMessage)
+		e := json.Unmarshal(msg.Value, &retryMessage)
+		if e != nil {
+			fmt.Print("consumeSideTopic::error while unmarshalling.\n", e)
+		} else {
+			fmt.Printf("\n\nMessage consumed by side-topic.\n topic: %s, key: %spartition: %d, offset: %d",
+				retryMessage.Topic, retryMessage.Key, msg.Partition, msg.Offset)
+			go ScheduleKafkaRetry(retryMessage)
+		}
+	}
+}
+func Produce(ctx context.Context, topic KAFKA_TOPIC, key []byte, value []byte) {
+
+	kafkaWriter := kafka.NewWriter(kafka.WriterConfig{
+		Brokers:  getBrokers(1),
+		Topic:    string(topic),
+		Balancer: &kafka.RoundRobin{},
+	})
+
+	err := kafkaWriter.WriteMessages(ctx, kafka.Message{
+		// create an arbitrary message payload for the value
+		Value: value,
+	})
+	if err != nil {
+		fmt.Print("could not write message " + err.Error())
+	}
+}
+
 func Initiate(r *resolver.Resolver) {
 	ctx := context.Background()
 	go consumeIssuedToken(ctx, r)
 	go consumeNewUserCreated(ctx, r)
+	go consumeSideTopic(ctx, r)
 }
