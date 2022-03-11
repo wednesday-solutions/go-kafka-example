@@ -110,7 +110,8 @@ func Start(cfg *config.Configuration) (*echo.Echo, error) {
 		playgroundHandler.ServeHTTP(res, req)
 		return nil
 	})
-	kafka.Initiate(r)
+	go kafka.InitScheduledJobs()
+	go kafka.Initiate(r)
 	server.Start(e, &server.Config{
 		Port:                cfg.Server.Port,
 		ReadTimeoutSeconds:  cfg.Server.ReadTimeout,

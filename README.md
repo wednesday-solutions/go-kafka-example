@@ -88,3 +88,15 @@ The producer and the consumer service come with out of the box support for Graph
 If service discovery endpoints are configured for the consumer and producer services, it allows for inter-service requests. Checkout this example for inter-service communication between the consumer and the  producer services, the consumer exposes a route ([/ping](https://github.com/wednesday-solutions/go-kafka-example/blob/main/consumer/internal/server/server.go#L25)) which on GET requests will make a GET request to the producer service’s ([/producer-svc/ping-what](https://github.com/wednesday-solutions/go-kafka-example/blob/main/producer/internal/server/server.go#L23)) route. The response from the producer is interpreted by the consumer and the response is served.
 
 Provide the producer’s service discovery endpoint as an environment variable([PRODUCER_SVC_ENDPOINT](https://github.com/wednesday-solutions/go-kafka-example/blob/main/consumer/.env.develop#L24)), which will be used by the consumer. When developing locally, the environment variable is [set](https://github.com/wednesday-solutions/go-kafka-example/blob/main/consumer/.env.local#L28) to match the local endpoint of the producer server.
+
+## Built in retry mechanism
+
+If there is an issue while processing the incoming message we write the message to a side-topic. The consumer of the side topic retries messages a fixed number of times with an exponential backoff interval. If the message isn't processed after that, it's sent to a dead-letter-queue.
+
+In order to prevent message bloat and for each of the individual consumers to handle updation of count the Scheduler will update the count in redis based on hash of topic, message. We don't use key cause it's possible that the key was randomly generated and you keep getting a unique hash. This should be unique. If the same message is being sent multiple times there is something wrong.
+
+When retrying the first time we will schedule a job to execute in expBackOff(retryCount + 1) to drop that key from the cache.
+
+- [Publish message to a side topic](./consumer/pkg/utl/kafkaservice/kafka.go#L71)
+- [Retry with exponential backoff using redis so that container teardown doesn't impact retry logic](./consumer/pkg/utl/kafkaservice/redis_scheduler.go#L142)
+- [Publish message to a dead letter queue after max retries are exhausted](./consumer/pkg/utl/kafkaservice/redis_scheduler.go#L138)
