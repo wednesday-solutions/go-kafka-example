@@ -3,7 +3,7 @@ package server
 import (
 	"context"
 	"fmt"
-	"libs/producerClient"
+	"libs/producerclient"
 	"net/http"
 	"os"
 	"os/signal"
@@ -21,7 +21,7 @@ func New() *echo.Echo {
 	e := echo.New()
 	e.Use(middleware.Logger(), middleware.Recover(), secure.CORS(), secure.Headers())
 	e.GET("/", healthCheck)
-	e.GET("ping", producerClient.What)
+	e.GET("ping", producerclient.What)
 	e.Validator = &CustomValidator{V: validator.New()}
 	custErr := &customErrHandler{e: e}
 	e.HTTPErrorHandler = custErr.handler

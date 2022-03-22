@@ -1,9 +1,9 @@
-package producerClient
+package producerclient
 
 import (
 	"fmt"
 	"github.com/labstack/echo"
-	"libs/restClient"
+	client "libs/restclient"
 	"net/http"
 	"os"
 )
@@ -16,7 +16,7 @@ type PongResponse struct {
 func What(ctx echo.Context) error {
 	producerServiceURL := os.Getenv("PRODUCER_SVC_ENDPOINT") + "/ping-what"
 	var pongJson PongResponse
-	err := restClient.Get(producerServiceURL, &pongJson)
+	err := client.Get(producerServiceURL, &pongJson)
 	if err != nil {
 		return fmt.Errorf("%w", err)
 	}

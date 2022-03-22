@@ -10,7 +10,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
-	"libs/restClient"
+	"libs/restclient"
 	"log"
 	"net/http"
 	"os"
@@ -22,7 +22,7 @@ import (
 )
 
 func init() {
-	restClient.Client = &mocks.MockClient{}
+	restclient.Client = &mocks.MockClient{}
 }
 
 // Improve tests
