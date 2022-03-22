@@ -1,8 +1,16 @@
 package server_test
 
 import (
+	"bytes"
+	"consumer/internal/server"
+	"consumer/testutls"
 	"context"
 	"fmt"
+	. "github.com/agiledragon/gomonkey/v2"
+	"github.com/labstack/echo"
+	"github.com/stretchr/testify/assert"
+	"io/ioutil"
+	"libs/restClient"
 	"log"
 	"net/http"
 	"os"
@@ -10,16 +18,15 @@ import (
 	"reflect"
 	"testing"
 	"time"
-
-	"consumer/internal/server"
-	"consumer/testutls"
-	. "github.com/agiledragon/gomonkey/v2"
-	"github.com/labstack/echo"
-	"github.com/stretchr/testify/assert"
+	"utils/mocks"
 )
 
+func init() {
+	restClient.Client = &mocks.MockClient{}
+}
+
 // Improve tests
-func TestNew(t *testing.T) {
+func TestHealthCheck(t *testing.T) {
 	e := server.New()
 	if e == nil {
 		t.Errorf("Server should not be nil")
@@ -36,6 +43,47 @@ func TestNew(t *testing.T) {
 		t.Fatal(err.Error())
 	}
 	assert.Equal(t, response["data"], "consumer: Go template at your service!🍲")
+}
+
+func TestProducerServiceApi(t *testing.T) {
+	json := `{"ok": "pong"}`
+	// create a new reader with that JSON
+	responseBody := ioutil.NopCloser(bytes.NewReader([]byte(json)))
+	mocks.GetDoFunc = func(*http.Request) (*http.Response, error) {
+		return &http.Response{
+			StatusCode: 200,
+			Body:       responseBody,
+		}, nil
+	}
+	e := server.New()
+	if e == nil {
+		t.Errorf("Server should not be nil")
+	}
+	assert.NotEmpty(t, e)
+	response, err := testutls.MakeRequest(
+		testutls.RequestParameters{
+			E:          e,
+			Pathname:   "/ping",
+			HttpMethod: "GET",
+		},
+	)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	assert.Equal(t, "pong", response["ok"])
+	mocks.GetDoFunc = func(*http.Request) (*http.Response, error) {
+		return nil, fmt.Errorf("connection  error")
+	}
+	response1, _ := testutls.MakeRequest(
+		testutls.RequestParameters{
+			E:          e,
+			Pathname:   "/ping",
+			HttpMethod: "GET",
+		},
+	)
+	fmt.Println(response1)
+	assert.Equal(t, "Internal Server Error", response1["message"])
+	assert.Empty(t, response1["ok"])
 }
 
 type args struct {
@@ -82,6 +130,7 @@ func TestStart(t *testing.T) {
 			}),
 		},
 	}
+
 	for name, tt := range cases {
 		t.Run(name, func(t *testing.T) {
 			ApplyMethod(reflect.TypeOf(tt.args.e), "StartServer", func(e *echo.Echo, s *http.Server) (err error) {
