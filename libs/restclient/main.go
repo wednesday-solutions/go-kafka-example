@@ -22,6 +22,9 @@ func init() {
 
 func Get(url string, jsonResponse interface{}) error {
 	request, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return fmt.Errorf("restclient.Get: failed to initialize request: %w", err)
+	}
 	response, err := Client.Do(request)
 	if err != nil {
 		return fmt.Errorf("restclient.Get: no response: %w", err)
