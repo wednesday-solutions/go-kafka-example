@@ -22,6 +22,7 @@ func New() *echo.Echo {
 	e.Use(middleware.Logger(), middleware.Recover(), secure.CORS(), secure.Headers())
 	e.GET("/", healthCheck)
 	e.GET("ping", producerclient.What)
+	e.POST("producer-login", producerclient.LoginPassthrough)
 	e.Validator = &CustomValidator{V: validator.New()}
 	custErr := &customErrHandler{e: e}
 	e.HTTPErrorHandler = custErr.handler
