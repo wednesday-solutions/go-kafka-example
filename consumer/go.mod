@@ -2,6 +2,10 @@ module consumer
 
 go 1.14
 
+replace libs => ./../libs
+
+replace utils => ./../utils
+
 require (
 	github.com/99designs/gqlgen v0.14.0
 	github.com/DATA-DOG/go-sqlmock v1.5.0
@@ -18,7 +22,6 @@ require (
 	github.com/joho/godotenv v1.3.0
 	github.com/kat-co/vala v0.0.0-20170210184112-42e1d8b61f12
 	github.com/labstack/echo v3.3.10+incompatible
-	github.com/labstack/gommon v0.3.0 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/lib/pq v1.10.0
 	github.com/mitchellh/hashstructure/v2 v2.0.2
@@ -27,13 +30,14 @@ require (
 	github.com/rs/zerolog v1.18.0
 	github.com/segmentio/kafka-go v0.4.27
 	github.com/spf13/viper v1.10.0
-	github.com/stretchr/testify v1.7.0
-	github.com/valyala/fasttemplate v1.1.0 // indirect
+	github.com/stretchr/testify v1.7.1
 	github.com/vektah/gqlparser/v2 v2.2.0
 	github.com/volatiletech/inflect v0.0.1 // indirect
 	github.com/volatiletech/null v8.0.0+incompatible
 	github.com/volatiletech/sqlboiler v3.7.1+incompatible
-	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
+	golang.org/x/crypto v0.0.0-20220321153916-2c7772ba3064
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
+	libs v1.0.0
+	utils v1.0.0
 )
