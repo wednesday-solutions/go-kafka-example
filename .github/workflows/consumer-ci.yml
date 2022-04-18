@@ -39,6 +39,7 @@ jobs:
       - name: Test
         run:  ./test.sh
   golangci-lint:
+    name: lint
     runs-on: ubuntu-latest
     steps:
       - name: Install golangci
