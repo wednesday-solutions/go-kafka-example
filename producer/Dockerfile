@@ -5,6 +5,8 @@ RUN mkdir -p /go/src/github.com/wednesday-solutions/libs
 RUN mkdir -p /go/src/github.com/wednesday-solutions/utils
 
 RUN [ "go", "install", "github.com/rubenv/sql-migrate/...@latest"]
+RUN [ "go", "install", "github.com/volatiletech/sqlboiler@v3.7.1"]
+RUN [ "go", "install", "github.com/99designs/gqlgen@v0.14.0"]
 
 ADD ./libs /go/src/github.com/wednesday-solutions/libs
 ADD ./utils /go/src/github.com/wednesday-solutions/utils
