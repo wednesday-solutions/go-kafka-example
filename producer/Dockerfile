@@ -1,13 +1,28 @@
 FROM golang
 
 RUN mkdir -p /go/src/github.com/wednesday-solutions/go-template-producer
+RUN mkdir -p /go/src/github.com/wednesday-solutions/libs
+RUN mkdir -p /go/src/github.com/wednesday-solutions/utils
 
-RUN go get -v github.com/rubenv/sql-migrate/... \
-  github.com/volatiletech/sqlboiler \
-  github.com/99designs/gqlgen
+RUN [ "go", "install", "github.com/rubenv/sql-migrate/...@latest"]
+RUN [ "go", "install", "github.com/volatiletech/sqlboiler@v3.7.1"]
+RUN [ "go", "install", "github.com/99designs/gqlgen@v0.14.0"]
 
-ADD . /go/src/github.com/wednesday-solutions/go-template-producer
-WORKDIR /go/src/github.com/wednesday-solutions/go-template-producer
+ADD ./libs /go/src/github.com/wednesday-solutions/libs
+ADD ./utils /go/src/github.com/wednesday-solutions/utils
+ADD ./producer /go/src/github.com/wednesday-solutions/go-template-producer
+
+WORKDIR /go/src/github.com/wednesday-solutions/libs
+RUN GOARCH=amd64 \
+    GOOS=linux \
+    CGO_ENABLED=0 \
+    go mod vendor
+WORKDIR /go/src/github.com/wednesday-solutions/utils
+RUN GOARCH=amd64 \
+    GOOS=linux \
+    CGO_ENABLED=0 \
+    go mod vendor
+WORKDIR ../go-template-producer
 
 RUN GOARCH=amd64 \
     GOOS=linux \
