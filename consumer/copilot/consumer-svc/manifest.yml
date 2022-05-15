@@ -10,7 +10,7 @@ type: Load Balanced Web Service
 http:
   # Requests to this path will be forwarded to your service.
   # To match all requests you can use the "/" path.
-  path: '/'
+  path: "/"
   # You can specify a custom health check path. The default is "/".
   # healthcheck: '/'
 
@@ -21,19 +21,19 @@ image:
   # Port exposed through your container to route traffic to it.
   port: 9000
 
-cpu: 256       # Number of CPU units for the task.
-memory: 512    # Amount of memory in MiB used by the task.
-count: 1       # Number of tasks that should be running in your service.
-exec: true     # Enable running commands in your container.
+cpu: 256 # Number of CPU units for the task.
+memory: 512 # Amount of memory in MiB used by the task.
+count: 1 # Number of tasks that should be running in your service.
+exec: true # Enable running commands in your container.
 
 # Optional fields for more advanced use-cases.
 #
-variables:                    # Pass environment variables as key value pairs.
- ENVIRONMENT_NAME: develop
+variables: # Pass environment variables as key value pairs.
+  ENVIRONMENT_NAME: develop
 
-#secrets:                      # Pass secrets from AWS Systems Manager (SSM) Parameter Store.
-#  GITHUB_TOKEN: GITHUB_TOKEN  # The key is the name of the environment variable, the value is the name of the SSM parameter.
-
+secrets:
+  SLACK_TOKEN:
+    secretsmanager: "dev/go-kafka-example/slack"
 # You can override any of the values defined above by environment.
 #environments:
 #  test:
