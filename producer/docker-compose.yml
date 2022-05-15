@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   db:
@@ -12,7 +12,10 @@ services:
       - POSTGRES_PORT=${DB_PORT}
       - POSTGRES_DB=${DB_NAME}
   app:
-    build: .
+    build:
+      context: ../
+      dockerfile: ./producer/Dockerfile
+
     restart: always
     env_file:
       - ./.env.docker
@@ -21,6 +24,4 @@ services:
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
     environment:
-      ENVIRONMENT_NAME: 'docker'
-
-   
+      ENVIRONMENT_NAME: "docker"

@@ -10,15 +10,17 @@ type: Load Balanced Web Service
 http:
   # Requests to this path will be forwarded to your service.
   # To match all requests you can use the "/" path.
-  path: 'producer-svc*'
-  header: 
+  path: "producer-svc*"
+  header:
   # You can specify a custom health check path. The default is "/".
-  healthcheck: '/producer-svc'
+  healthcheck: "/producer-svc"
 
 # Configuration for your containers and service.
 image:
   # Docker build arguments. For additional overrides: https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/#image-build
-  build: Dockerfile
+  build:
+    dockerfile: ./Dockerfile
+    context: ../
   # Port exposed through your container to route traffic to it.
   port: 9001
 
