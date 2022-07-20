@@ -9,6 +9,7 @@ import (
 	"os/signal"
 	"syscall"
 
+	"consumer/internal/slack"
 	rediscache "consumer/pkg/utl/rediscache"
 
 	"github.com/gocraft/work"
@@ -107,14 +108,16 @@ func ScheduleKafkaRetry(retryMessage RetryMessage) {
 		"message": string(retryMessage.Message),
 	}, hashstructure.FormatV2, nil)
 	if err != nil {
-		// send slack alert
-		fmt.Println("error while creating a hash in the ScheduleKafkaRetry function.\n", err)
+		slack.SendMessage(
+			fmt.Sprintf("\n error while creating a hash in the ScheduleKafkaRetry function. %s \n", err),
+		)
 	}
 	count := 1
 	val, err := rediscache.GetKeyValue(fmt.Sprint(hash))
 	if err != nil {
-		// send slack alert
-		fmt.Println("error while getting value from redis in the ScheduleKafkaRetry function.\n", err)
+		slack.SendMessage(
+			fmt.Sprintf("\n error while getting value from redis in the ScheduleKafkaRetry function. %s \n", err),
+		)
 	}
 	if val == nil {
 		ScheduleCachePruning(fmt.Sprint(hash))
@@ -122,16 +125,18 @@ func ScheduleKafkaRetry(retryMessage RetryMessage) {
 		b := val.([]byte)
 		err = json.Unmarshal(b, &count)
 		if err != nil {
-			// send slack alert
-			fmt.Println("error while unmarshaling count from redis in the ScheduleKafkaRetry function.\n", err)
+			slack.SendMessage(
+				fmt.Sprintf("\n error while unmarshaling count from redis in the ScheduleKafkaRetry function. %s \n", err),
+			)
 		}
 		count = count + 1
 	}
 	if count < ExponentialBackOffMaxRetry {
 		err := rediscache.SetKeyValue(fmt.Sprint(hash), count)
 		if err != nil {
-			// send slack alert
-			fmt.Println("error while udpating the count in redis", err)
+			slack.SendMessage(
+				fmt.Sprintf("\n error while udpating the count in redis. %s \n", err),
+			)
 		}
 	} else {
 		// sending items to the dead letter queue
